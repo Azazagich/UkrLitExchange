@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UkrLitExchange - Welcome</title>
+    <link th:href="@{/css/welcome-page.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="content-container">
+
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo">
+                <img th:src="@{/img/logo.png}" width="80px" height="68px" alt="UkrLitExchange Logo">
+                <p><span>Ukr</span>Lit<span>Exchange</span></p>
+            </div>
+            <nav class="nav-buttons">
+                <a href="/login" class="btn btn-primary">Sign In</a>
+                <a href="/register" class="btn btn-secondary">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-container">
+                <h1>Welcome to UkrLitExchange</h1>
+                <p>Your gateway to exchanging and donating books effortlessly.</p>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2>Why Join UkrLitExchange?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>📖 Personal Profile</h3>
+                        <p>Showcase your collection & interact with readers.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📚 My Library</h3>
+                        <p>Manage books with advanced filters.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔎 Advanced Search</h3>
+                        <p>Find books by genre, author & language.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔒 Private Groups</h3>
+                        <p>Connect with university & academic circles.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>💖 Book Donations</h3>
+                        <p>Support literacy & share books with others.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>💰 Secure Exchange</h3>
+                        <p>Swap books seamlessly & securely.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer th:replace="~{fragments/footer.html :: footer}"></footer>
+</div>
+
+</body>
+</html>
+
+

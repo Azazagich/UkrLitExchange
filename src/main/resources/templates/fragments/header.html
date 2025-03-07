@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/header.css}">
+</head>
+<body>
+<div th:fragment="header">
+<header>
+    <div class="logo">
+        <img th:src="@{/img/logo.png}" width="80px" height="68px" alt="UkrLitExchange Logo">
+        <p><span>Ukr</span>Lit<span>Exchange</span></p>
+    </div>
+    <nav class="nav-links">
+        <a href="#profile">Профіль</a>
+        <a href="#library">Моя бібліотека</a>
+        <a href="#groups">Групи</a>
+        <a href="#search">Знайти книгу</a>
+        <a href="#requests">Запроси на обмін</a>
+    </nav>
+</header>
+</div>
+</body>
+</html>

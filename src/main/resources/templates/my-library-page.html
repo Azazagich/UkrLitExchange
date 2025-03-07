@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Library</title>
+</head>
+<body>
+<header th:replace="fragments/header.html :: header"></header>
+<main>
+    <h2>My Library</h2>
+        <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Language</th>
+            <th>Status</th>
+            <th>Condition</th>
+            <th>Description</th>
+            <th>Owners</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${userBooks}">
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.genre}"></td>
+            <td th:text="${book.language}"></td>
+            <td th:text="${book.bookStatus}"></td>
+            <td th:text="${book.condition}"></td>
+            <td th:text="${book.description}"></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<footer th:replace="fragments/footer.html :: footer"></footer>
+</body>
+</html>
