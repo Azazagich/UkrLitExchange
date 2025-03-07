@@ -1,0 +1,48 @@
+/* === Header Component Styles === */
+header {
+    background-color: #ffffff;         /* Білий фон */
+    padding: 15px 30px;                /* Внутрішні відступи */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легка тінь для об'єму */
+    display: flex;                     /* Використовуємо Flexbox для вирівнювання */
+    align-items: center;               /* Вертикальне вирівнювання */
+    justify-content: space-between;    /* Розподіл простору між логотипом і меню */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 80px;
+    height: 68px;
+    margin-right: 10px;               /* Простір між зображенням і текстом */
+    object-fit: contain;
+}
+
+.logo p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.logo p span {
+    color: #ff5722;                   /* Колір акценту для частин тексту */
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;                        /* Проміжок між посиланнями */
+}
+
+.nav-links a {
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;      /* Плавна зміна кольору при наведенні */
+}
+
+.nav-links a:hover {
+    color: #007bff;                   /* Колір при наведенні */
+}

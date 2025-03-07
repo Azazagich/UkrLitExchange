@@ -1,0 +1,165 @@
+/* Загальні стилі для сторінки */
+body {
+    background-color: #f8f9fa; /* Світлий фон */
+    font-family: 'Inter', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.content-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* Секція профілю */
+.profile-header {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.profile-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin-right: 20px;
+    overflow: hidden;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-details h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.profile-details p {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+/* Секція контактної інформації */
+.profile-info {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.profile-info h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+/* Кнопка редагування профілю */
+.edit-profile-btn {
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-profile-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Секція "Мої книги" */
+.book-list {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.book-list h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.book-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.book-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.book-list li:last-child {
+    border-bottom: none;
+}
+
+/* Секція "Мої групи" */
+.group-info {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.group-info h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.group-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Секція "Навчальний заклад" */
+.institution-info {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.institution-info h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.institution-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Кастомізація навігаційних вкладок */
+.nav-tabs .nav-link {
+    font-size: 16px;
+    padding: 10px 15px;
+    color: #007bff;
+    border: none;
+    background-color: transparent;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: #e9ecef;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px 5px 0 0;
+}
