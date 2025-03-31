@@ -17,12 +17,12 @@
         <li class="nav-item" role="presentation">
             <a class="nav-link active" id="tab1-tab" data-bs-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Profile</a>
         </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="tab2-tab" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">My Books</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="tab3-tab" data-bs-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false">Groups</a>
-        </li>
+<!--        <li class="nav-item" role="presentation">-->
+<!--            <a class="nav-link" id="tab2-tab" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">My Books</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item" role="presentation">-->
+<!--            <a class="nav-link" id="tab3-tab" data-bs-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false">Groups</a>-->
+<!--        </li>-->
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="tab4-tab" data-bs-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="false">Institution</a>
         </li>
@@ -56,31 +56,31 @@
         </div>
 
         <!-- Секція "Мої книги" -->
-        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
-            <section class="book-list">
-                <h3>My Books</h3>
+<!--        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">-->
+<!--            <section class="book-list">-->
+<!--                <h3>My Books</h3>-->
 
-                <ul>
-                    <li th:each="books : ${user.books}">
-                        Title: <span th:text="${books.title}" /> |
-                        Author: <span th:text="${books.author}"/> |
-                        Genre: <span th:text="${books.genre}" /> |
-                        Language: <span th:text="${books.language}" /> |
-                        Status: <span th:text="${books.bookStatus}"/>
-                    </li>
-                </ul>
-            </section>
-        </div>
+<!--                <ul>-->
+<!--                    <li th:each="books : ${user.books}">-->
+<!--                        Title: <span th:text="${books.title}" /> |-->
+<!--                        Author: <span th:text="${books.author}"/> |-->
+<!--                        Genre: <span th:text="${books.genre}" /> |-->
+<!--                        Language: <span th:text="${books.language}" /> |-->
+<!--                        Status: <span th:text="${books.bookStatus}"/>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </section>-->
+<!--        </div>-->
 
         <!-- Секція "Мої групи" -->
-        <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
-            <section class="group-info">
-                <h3>Group Membership</h3>
-                <ul th:each="group : ${user.groups}">
-                    <li>Group: <span th:text="${group.name}" /></li>
-                </ul>
-            </section>
-        </div>
+<!--        <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">-->
+<!--            <section class="group-info">-->
+<!--                <h3>Group Membership</h3>-->
+<!--                <ul th:each="group : ${user.groups}">-->
+<!--                    <li>Group: <span th:text="${group.name}" /></li>-->
+<!--                </ul>-->
+<!--            </section>-->
+<!--        </div>-->
 
         <!-- Секція "Навчальний заклад" -->
         <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
@@ -98,7 +98,7 @@
             <section class="reviews-section">
                 <h3>My Reviews</h3>
                 <ul>
-                    <li th:each="review : ${user.}">
+                    <li th:each="review : ${user.review}">
                         <strong th:text="${review.reviewer.fullName}"></strong> rated you
                         <span th:text="${review.rating}"></span>/5
                         <p th:text="${review.comment}"></p>
