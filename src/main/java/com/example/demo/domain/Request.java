@@ -21,10 +21,6 @@ public class Request {
     @Column(nullable = false)
     private RequestStatus status;
 
-    // TODO: delete field and exclude opportunity for selling book
-    @Column
-    private double price;
-
     @EqualsAndHashCode.Exclude
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)

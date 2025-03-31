@@ -1,7 +1,6 @@
 package com.example.demo.controller.web;
 
 import com.example.demo.service.BookService;
-import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-public class MyLibraryPageWebController {
+public class MyLibraryWebController {
 
     private final BookService bookService;
 

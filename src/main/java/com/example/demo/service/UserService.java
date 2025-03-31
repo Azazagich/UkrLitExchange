@@ -6,6 +6,9 @@ import com.example.demo.service.dto.UserDTO;
 import com.example.demo.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +18,7 @@ import java.util.List;
 @Transactional
 @Slf4j
 @RequiredArgsConstructor
-public class UserService implements CrudService<UserDTO, Long>{
+public class UserService implements UserDetailsService, CrudService<UserDTO, Long>{
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -92,5 +95,16 @@ public class UserService implements CrudService<UserDTO, Long>{
 
         userRepository.deleteById(id);
         log.info("Successfully deleted user with id: {}", id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("User not found: " + username));
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                user.getAuthorities()
+        );
     }
 }

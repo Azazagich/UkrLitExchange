@@ -1,11 +1,16 @@
-
 package com.example.demo.domain;
 
+import com.example.demo.domain.enumeration.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 @Entity
@@ -14,7 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -34,11 +39,15 @@ public class User {
     @Column(nullable = false)
     private String fullName;
 
-    @Column(nullable = false)
+    @Column
     private String location;
 
     @Column
     private String bio;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private Role role;
 
     @EqualsAndHashCode.Exclude
     @ManyToMany(fetch = FetchType.LAZY)
@@ -58,8 +67,41 @@ public class User {
     @JoinColumn(name = "institution_id")
     private Institution institution;
 
-    //TODO
-    //    @EqualsAndHashCode.Exclude
-    //    @OneToMany(mappedBy = "reviewer")
-    //    private Set<Review> givenReviews;
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "reviewer")
+    private Set<Review> givenReviews;
+
+    @EqualsAndHashCode.Exclude
+    @ManyToMany
+    @JoinTable(name = "user_friends",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private Set<User> friends;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(getRole().getAuthority());
+        return Collections.singletonList(authority);
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
