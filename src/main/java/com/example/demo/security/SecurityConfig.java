@@ -1,5 +1,6 @@
 package com.example.demo.security;
 
+import com.example.demo.domain.enumeration.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,12 +30,16 @@ public class SecurityConfig  {
                                 .requestMatchers(
                                         "/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**"
                                 ).permitAll()
+                                .requestMatchers("/web/ukr-lit-exchange/*/admin/**").hasAuthority("ADMIN")
+//                                .requestMatchers("**/user/**").hasAnyAuthority("USER", "ADMIN")
+//                                .requestMatchers("/public/**").permitAll()
                                 .requestMatchers(allowedPaths).permitAll()
+                                .requestMatchers("/api/ukr-lit-exchange/**").permitAll()
                                 .anyRequest().authenticated())
                         .formLogin(login -> login
                                 .loginPage("/login")
                                 .loginProcessingUrl("/perform_login")
-                                .defaultSuccessUrl("/web/ukr-lit-exchange/groups", true)
+                                .defaultSuccessUrl("/web/ukr-lit-exchange/profile", true)
                                 .failureUrl("/login?error=true?"))
                             .logout(logout -> logout
                                     .logoutUrl("/perform_logout")
