@@ -23,14 +23,19 @@ public class UserService implements UserDetailsService, CrudService<UserDTO, Lon
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-
-
     @Override
     public UserDTO getById(Long id) {
         log.debug("Fetching user with id: {}", id);
         return userRepository.findById(id)
                 .map(userMapper::toDTO)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+    }
+
+    public UserDTO getByUsername(String username) {
+        log.debug("Fetching user with username: {}", username);
+        return userRepository.findByUsername(username)
+                .map(userMapper::toDTO)
+                .orElseThrow(() -> new RuntimeException("User not found with username: " + username));
     }
 
     @Override

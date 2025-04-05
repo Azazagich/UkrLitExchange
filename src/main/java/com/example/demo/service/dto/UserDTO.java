@@ -35,6 +35,9 @@ public class UserDTO implements Serializable {
     @Size(max = 350, message = "Comment must be at most 350 characters")
     private String bio;
 
+    @Size(max = 20)
+    private String phoneNumber;
+
     private Set<BookDTO> books;
 
     private Set<GroupDTO> groups;
