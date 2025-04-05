@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Table(name = "review")
-public class Review {
+public class Review extends AbstractAuditingEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

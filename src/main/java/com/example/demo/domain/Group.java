@@ -11,7 +11,7 @@ import java.util.*;
 @AllArgsConstructor
 @Builder
 @Table(name = "groups")
-public class Group {
+public class Group extends AbstractAuditingEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

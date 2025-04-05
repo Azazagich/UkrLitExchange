@@ -32,6 +32,9 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(unique = true, length = 20)
+    private String phoneNumber;
+
     @Column(nullable = false)
     @Size(min = 8)
     private String password;
@@ -49,8 +52,7 @@ public class User implements UserDetails {
     @Column
     private Role role;
 
-    @EqualsAndHashCode.Exclude
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
         name = "users_books",
         joinColumns = @JoinColumn(name = "user_id"),

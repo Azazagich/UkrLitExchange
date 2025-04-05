@@ -14,5 +14,4 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query("select book from Book book join book.owners owner where owner.id = :id")
     List<Book> getBooksByOwnerId(@Param("id") Long id);
-
 }
