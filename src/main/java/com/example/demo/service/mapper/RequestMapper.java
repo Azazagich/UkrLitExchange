@@ -22,7 +22,7 @@ public interface RequestMapper extends MapperEntity<Request, RequestDTO> {
 
     @Named("toBookDTO")
     @Mapping(target = "description", ignore = true)
-    @Mapping(target = "owners", ignore = true)
+    @Mapping(target = "owner", ignore = true)
     BookDTO toBookDTO(Book book);
 
     @Named("toEagerRequestDTO")

@@ -4,7 +4,6 @@ import com.example.demo.domain.enumeration.BookStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
 
 @Entity
 @Data
@@ -40,7 +39,10 @@ public class Book extends AbstractAuditingEntity{
     @Column
     private String description;
 
+    @Column
+    private String photoBookUrl;
+
     @EqualsAndHashCode.Exclude
-    @ManyToMany(mappedBy = "books", fetch = FetchType.LAZY)
-    private Set<User> owners;
+    @ManyToOne
+    private User owner;
 }

@@ -34,7 +34,7 @@ public class SecurityConfig  {
 //                                .requestMatchers("**/user/**").hasAnyAuthority("USER", "ADMIN")
 //                                .requestMatchers("/public/**").permitAll()
                                 .requestMatchers(allowedPaths).permitAll()
-                                .requestMatchers("/api/ukr-lit-exchange/**").permitAll()
+                                .requestMatchers("/api/ukr-lit-exchange/users/**").permitAll()
                                 .anyRequest().authenticated())
                         .formLogin(login -> login
                                 .loginPage("/login")
@@ -55,7 +55,7 @@ public class SecurityConfig  {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+                .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/uploads/avatar/**");
     }
 
 

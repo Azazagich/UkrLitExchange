@@ -4,7 +4,6 @@ import com.example.demo.service.UserService;
 import com.example.demo.service.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -21,12 +20,12 @@ public class ProfileWebController {
 
     @GetMapping
     public String profilePage(
-            Model model,
-            @AuthenticationPrincipal UserDetails userDetails
+            @AuthenticationPrincipal UserDetails userDetails,
+            Model model
     ) {
-        UserDTO userDTO = userService.getById(
-                userService.getByUsername(userDetails.getUsername()).getId());
+        UserDTO userDTO = userService.getByUsername(userDetails.getUsername());
         model.addAttribute("user", userDTO);
+        model.addAttribute("avatar_url", userDTO.getAvatarUrl());
         return "profile-page";
     }
 
@@ -36,8 +35,7 @@ public class ProfileWebController {
             @AuthenticationPrincipal UserDetails userDetails,
             Model model
     ) {
-        UserDTO userDTO = userService.getById(
-                userService.getByUsername(userDetails.getUsername()).getId());
+        UserDTO userDTO = userService.getByUsername(userDetails.getUsername());
         model.addAttribute("user", userDTO);
         return "profile-edit";
     }
@@ -49,16 +47,16 @@ public class ProfileWebController {
             @ModelAttribute("user") UserDTO userDTO
     ) {
         userService.update(
-                userService.getByUsername(userDetails.getUsername()).getId(), userDTO);
+                userService.getByUsername(userDetails.getUsername()).getId(),
+                userDTO);
         return "redirect:/web/ukr-lit-exchange/profile";
     }
 
 
-
     @GetMapping("admin/{userId}")
     public String profilePage(
-            Model model,
-            @PathVariable("userId") Long id
+            @PathVariable("userId") Long id,
+            Model model
     ) {
         UserDTO userDTO = userService.getById(id);
         model.addAttribute("user", userDTO);

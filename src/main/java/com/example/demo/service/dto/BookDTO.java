@@ -43,5 +43,7 @@ public class BookDTO implements Serializable {
     @Size(max = 300, message = "Description must be at most 300 characters")
     private String description;
 
-    private Set<UserDTO> owners;
+    private String photoBookUrl;
+
+    private UserDTO owner;
 }

@@ -1,6 +1,5 @@
 package com.example.demo.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -37,6 +36,8 @@ public class UserDTO implements Serializable {
 
     @Size(max = 20)
     private String phoneNumber;
+
+    private String avatarUrl;
 
     private Set<BookDTO> books;
 

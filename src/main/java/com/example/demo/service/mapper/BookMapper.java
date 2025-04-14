@@ -13,7 +13,7 @@ import java.util.List;
 public interface BookMapper extends MapperEntity<Book, BookDTO>{
 
     @Named("toEagerBookDTO")
-    @Mapping(target = "owners", qualifiedByName = "toDTOOwner")
+    @Mapping(target = "owner", qualifiedByName = "toDTOOwner")
     BookDTO toDTO(Book book);
 
     @Named("toDTOOwner")
@@ -25,7 +25,7 @@ public interface BookMapper extends MapperEntity<Book, BookDTO>{
     UserDTO toOwnerDTO(User user);
 
     @Named("toLazyDTOBook")
-    @Mapping(target = "owners", ignore = true)
+    @Mapping(target = "owner", ignore = true)
     BookDTO toLazyDTO(Book book);
 
     @IterableMapping(qualifiedByName = "toLazyDTOBook")

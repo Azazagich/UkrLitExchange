@@ -19,7 +19,7 @@ import java.util.List;
 public interface UserMapper extends MapperEntity<User, UserDTO>{
 
     @Named("toDTOBook")
-    @Mapping(target = "owners", ignore = true)
+    @Mapping(target = "owner", ignore = true)
     BookDTO toDTOBook(Book book);
 
     @Named("toDTOGroup")
