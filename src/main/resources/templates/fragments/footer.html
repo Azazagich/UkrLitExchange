@@ -1,14 +1,41 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <link th:href="@{/css/footer.css}" rel="stylesheet">
-</head>
 <body>
 <div th:fragment="footer">
     <footer>
-        <p>&copy; 2025 UkrLitExchange. All rights reserved.</p>
-        <p>Contact us: info@ukrlitexchange.com</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a th:href="@{/about}">About Us</a></li>
+                    <li><a th:href="@{/faq}">FAQ</a></li>
+                    <li><a th:href="@{/terms}">Terms of Service</a></li>
+                    <li><a th:href="@{/privacy}">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="footer-title">Contact Info</h4>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope me-2"></i>info@ukrlitexchange.com</li>
+                    <li><i class="fas fa-map-marker-alt me-2"></i>Kyiv, Ukraine</li>
+                    <li><i class="fas fa-phone me-2"></i>+380 44 123 4567</li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="footer-title">Follow Us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="mb-0">&copy; 2025 UkrLitExchange. All rights reserved.</p>
+        </div>
     </footer>
 </div>
 </body>

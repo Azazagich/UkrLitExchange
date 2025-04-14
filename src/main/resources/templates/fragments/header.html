@@ -1,27 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <link th:href="@{/css/header.css}">
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <div th:fragment="header">
-<header>
-    <div class="logo">
-        <img th:src="@{/img/logo.png}"
-             width="80px" height="68px"
-             alt="UkrLitExchange Logo">
-        <p><span>Ukr</span>Lit<span>Exchange</span></p>
-    </div>
-    <nav class="nav-links">
-        <a th:href="@{/web/ukr-lit-exchange/profile}">Профіль</a>
-        <a th:href="@{/web/ukr-lit-exchange/my-library}">Моя бібліотека</a>
-        <a href="#groups">Групи</a>
-        <a href="#search">Знайти книгу</a>
-        <a href="#requests">Запроси на обмін</a>
-        <a th:href="@{/perform_logout}">Вихід</a>
-    </nav>
-</header>
+    <!-- Authenticated Header -->
+    <header class="header py-3" sec:authorize="isAuthenticated()">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a th:href="@{/web/ukr-lit-exchange/welcome}" class="logo d-flex align-items-center text-decoration-none">
+                    <img th:src="@{/img/logo.png}" width="60" class="me-2" alt="Logo">
+                    <h2 class="logo-text mb-0">Ukr<span class="text-accent">Lit</span>Exchange</h2>
+                </a>
+
+                <nav class="nav-links d-flex align-items-center">
+                    <a th:href="@{/web/ukr-lit-exchange/profile}">Профіль</a>
+                    <a th:href="@{/web/ukr-lit-exchange/my-library}">Моя бібліотека</a>
+                    <a href="#groups">Групи</a>
+                    <a href="#search">Знайти книгу</a>
+                    <a href="#requests">Запроси</a>
+                    <a th:href="@{/perform_logout}">Вихід</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Guest Header -->
+    <header class="header py-3" sec:authorize="!isAuthenticated()">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a th:href="@{/web/ukr-lit-exchange/welcome}" class="logo d-flex align-items-center text-decoration-none">
+                    <img th:src="@{/img/logo.png}" width="60" class="me-2" alt="Logo">
+                    <h2 class="logo-text mb-0">Ukr<span class="text-accent">Lit</span>Exchange</h2>
+                </a>
+
+                <div class="d-flex gap-3">
+                    <a th:href="@{/login}" class="btn btn-primary-custom btn-custom">Sign In</a>
+                    <a th:href="@{/registration}" class="btn btn-secondary-custom btn-custom">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
 </div>
 </body>
 </html>
