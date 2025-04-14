@@ -1,179 +1,83 @@
-/* === Global Styles === */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+/* === Global Variables === */
+:root {
+    --dark-blue: #2A4F6E;
+    --light-gray: #f8f9fa;
+    --accent-blue: #3B6A94;
+    --hover-blue: #1A3A55;
 }
 
-html, body {
-    height: 100%;
-}
-
+/* === Base Styles === */
 body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--light-gray);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #f4f4f9;
-    color: #333;
-    line-height: 1.6;
 }
 
-/* Контейнер для основного контенту, який займає всю доступну висоту */
-.main-content {
+.content-container {
     flex: 1;
 }
 
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-}
 
-/* === Header === */
-.header {
-    background: #fff;
-    padding: 15px 0;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo img {
-    width: 80px;
-    height: 68px;
-    object-fit: contain;
-}
-
-.logo p {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin: 0;
-}
-
-.logo p span {
-    color: #ff5722; /* Колір акценту */
-}
-
-.logo img:hover {
-    transform: scale(1.1);
-}
-
-.nav-buttons {
-    display: flex;
-    gap: 15px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 18px;
+/* === Button Styles === */
+.btn-custom {
+    padding: 12px 30px;
     border-radius: 8px;
-    text-decoration: none;
-    font-size: 16px;
+    font-weight: 600;
     transition: all 0.3s ease;
+    letter-spacing: 0.5px;
 }
 
-.btn-primary {
-    background: #007bff;
-    color: #fff;
+.btn-primary-custom {
+    background: var(--dark-blue);
+    border: 2px solid var(--dark-blue);
+    color: white;
 }
 
-.btn-primary:hover {
-    background: #0056b3;
+.btn-primary-custom:hover {
+    background: var(--hover-blue);
+    border-color: var(--hover-blue);
+    box-shadow: 0 4px 15px rgba(42, 79, 110, 0.3);
 }
 
-.btn-secondary {
-    background: #28a745;
-    color: #fff;
+.btn-secondary-custom {
+    background: white;
+    border: 2px solid var(--dark-blue);
+    color: var(--dark-blue);
 }
 
-.btn-secondary:hover {
-    background: #1e7e34;
+.btn-secondary-custom:hover {
+    background: var(--dark-blue);
+    color: white;
+    box-shadow: 0 4px 15px rgba(42, 79, 110, 0.2);
 }
 
 /* === Hero Section === */
-.hero {
-    background: linear-gradient(135deg, #007bff, #6610f2);
-    color: white;
-    padding: 100px 0;
-    text-align: center;
-}
-
-.hero-container h1 {
-    font-size: 42px;
-    margin-bottom: 15px;
-}
-
-.hero-container p {
-    font-size: 18px;
-    margin-bottom: 25px;
-}
-
-.btn-cta {
-    background: #ffc107;
-    color: #333;
-    font-weight: bold;
-    padding: 12px 20px;
-}
-
-.btn-cta:hover {
-    background: #e0a800;
+.hero-section {
+    background: linear-gradient(135deg, var(--dark-blue) 0%, var(--accent-blue) 100%);
+    padding: 120px 0 100px;
 }
 
 /* === Features Section === */
-.features {
-    padding: 60px 0;
-    text-align: center;
-}
-
-.features h2 {
-    font-size: 32px;
-    margin-bottom: 30px;
-}
-
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
 .feature-card {
     background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 15px;
     transition: transform 0.3s ease;
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-.feature-card h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-/* === Footer === */
-footer {
-    background: #222;
-    color: #fff;
-    text-align: center;
-    padding: 15px 0;
-    margin-top: 40px;
-}
-
-footer p {
-    font-size: 14px;
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--dark-blue);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -1,10 +1,117 @@
 /* Стилі для футера */
+:root {
+    --dark-blue: #2A4F6E;
+    --light-gray: #f8f9fa;
+    --accent-blue: #3B6A94;
+}
+
 footer {
-    background-color: #333;
+    background-color: var(--dark-blue);
+    color: var(--light-gray);
+    padding: 40px 0 20px;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.footer-section {
+    margin-bottom: 20px;
+}
+
+.footer-title {
     color: white;
-    text-align: center;
-    padding: 10px 0;
+    font-weight: 600;
+    margin-bottom: 20px;
     position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
     bottom: 0;
-    width: 100%;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: var(--accent-blue);
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links a {
+    color: var(--light-gray);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-bottom: 1px;
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    color: var(--accent-blue);
+    transform: translateX(5px);
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-links a {
+    color: white;
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--accent-blue);
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.footer-links li:not(a) {
+    color: var(--light-gray);
+    cursor: default;
+}
+
+.footer-links li:hover:not(a) {
+    transform: none;
+    color: inherit;
+}
+
+.footer-links li i {
+    min-width: 25px;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .footer-section {
+        width: 30%;
+    }
 }

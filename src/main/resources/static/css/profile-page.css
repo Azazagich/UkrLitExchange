@@ -1,165 +1,259 @@
-/* Загальні стилі для сторінки */
-body {
-    background-color: #f8f9fa; /* Світлий фон */
-    font-family: 'Inter', sans-serif;
-    color: #333;
-    margin: 0;
-    padding: 0;
+/* profile-page.css */
+:root {
+    --dark-blue: #2A4F6E;
+    --accent-blue: #3B6A94;
+    --gradient-blue: linear-gradient(135deg, var(--dark-blue) 0%, var(--accent-blue) 100%);
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --shadow-primary: 0 8px 32px rgba(42, 79, 110, 0.15);
 }
 
-.content-container {
+.profile-main {
+    padding: 3rem 0;
     max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
+    margin: 0 auto;
 }
 
-/* Секція профілю */
+/* Profile Header */
 .profile-header {
     display: flex;
     align-items: center;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
+    gap: 2.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow-primary);
+    margin: 0 1.5rem 3rem;
 }
 
 .profile-avatar {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background-color: #ddd;
-    margin-right: 20px;
-    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
 }
 
 .profile-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: var(--shadow-primary);
+    transition: transform 0.3s ease;
+}
+
+.profile-avatar:hover {
+    transform: scale(1.02);
+}
+
+.online-status {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background: #28a745;
+    border: 3px solid white;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 2;
 }
 
 .profile-details h2 {
-    font-size: 28px;
-    margin-bottom: 10px;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--dark-blue);
+    margin-bottom: 1rem;
+    line-height: 1.2;
 }
 
-.profile-details p {
-    font-size: 16px;
-    margin-bottom: 5px;
+.profile-meta {
+    font-size: 1.1rem;
+    color: #4a5568;
 }
 
-/* Секція контактної інформації */
+.profile-meta i {
+    color: var(--accent-blue);
+    width: 25px;
+    margin-right: 0.5rem;
+}
+
+/* Contact Information */
 .profile-info {
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow-primary);
+    margin: 0 1.5rem 2rem;
 }
 
 .profile-info h3 {
-    font-size: 22px;
-    margin-bottom: 10px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--dark-blue);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-/* Кнопка редагування профілю */
+.profile-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.profile-info li {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    background: rgba(244, 247, 251, 0.6);
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-info li:hover {
+    transform: translateX(10px);
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.profile-info i {
+    font-size: 1.4rem;
+    color: var(--accent-blue);
+    min-width: 35px;
+    text-align: center;
+}
+
+.link-accent {
+    color: var(--accent-blue);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+    display: inline-block;
+}
+
+.link-accent::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--dark-blue);
+    transition: width 0.3s ease;
+}
+
+.link-accent:hover {
+    color: var(--dark-blue);
+}
+
+.link-accent:hover::after {
+    width: 100%;
+}
+
+/* Edit Button */
+.profile-actions {
+    text-align: center;
+    margin: 3rem 1.5rem 0;
+}
+
 .edit-profile-btn {
-    background-color: #007bff;
+    background: var(--gradient-blue);
+    color: white !important;
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
     border: none;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    box-shadow: var(--shadow-primary);
+    position: relative;
+    overflow: hidden;
+}
+
+.edit-profile-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            120deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+    );
+    transition: 0.5s;
 }
 
 .edit-profile-btn:hover {
-    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(42, 79, 110, 0.4);
 }
 
-/* Секція "Мої книги" */
-.book-list {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
+.edit-profile-btn:hover::before {
+    left: 100%;
 }
 
-.book-list h3 {
-    font-size: 22px;
-    margin-bottom: 15px;
+/* Responsive Design */
+@media (max-width: 992px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+        padding: 2rem;
+    }
+
+    .profile-details h2 {
+        font-size: 2.2rem;
+    }
 }
 
-.book-list ul {
-    list-style: none;
-    padding: 0;
+@media (max-width: 768px) {
+    .profile-main {
+        padding: 2rem 0;
+    }
+
+    .profile-header,
+    .profile-info {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        padding: 1.5rem;
+    }
+
+    .profile-info li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+        padding: 1rem;
+    }
+
+    .edit-profile-btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
-.book-list li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
+@media (max-width: 576px) {
+    .profile-details h2 {
+        font-size: 1.8rem;
+    }
 
-.book-list li:last-child {
-    border-bottom: none;
-}
+    .profile-info h3 {
+        font-size: 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
 
-/* Секція "Мої групи" */
-.group-info {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-
-.group-info h3 {
-    font-size: 22px;
-    margin-bottom: 15px;
-}
-
-.group-info ul {
-    list-style: none;
-    padding: 0;
-}
-
-/* Секція "Навчальний заклад" */
-.institution-info {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-
-.institution-info h3 {
-    font-size: 22px;
-    margin-bottom: 15px;
-}
-
-.institution-info ul {
-    list-style: none;
-    padding: 0;
-}
-
-/* Кастомізація навігаційних вкладок */
-.nav-tabs .nav-link {
-    font-size: 16px;
-    padding: 10px 15px;
-    color: #007bff;
-    border: none;
-    background-color: transparent;
-}
-
-.nav-tabs .nav-link:hover {
-    background-color: #e9ecef;
-}
-
-.nav-tabs .nav-link.active {
-    background-color: #007bff;
-    color: #fff;
-    border-radius: 5px 5px 0 0;
+    .profile-avatar img {
+        width: 120px;
+        height: 120px;
+    }
 }
