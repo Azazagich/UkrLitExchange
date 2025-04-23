@@ -34,7 +34,7 @@ public class SecurityConfig  {
 //                                .requestMatchers("**/user/**").hasAnyAuthority("USER", "ADMIN")
 //                                .requestMatchers("/public/**").permitAll()
                                 .requestMatchers(allowedPaths).permitAll()
-                                .requestMatchers("/api/ukr-lit-exchange/users/**").permitAll()
+                                .requestMatchers("/api/ukr-lit-exchange/**").permitAll()
                                 .anyRequest().authenticated())
                         .formLogin(login -> login
                                 .loginPage("/login")

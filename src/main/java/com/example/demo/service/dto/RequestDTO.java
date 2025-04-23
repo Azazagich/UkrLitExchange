@@ -1,19 +1,17 @@
 package com.example.demo.service.dto;
 
-import com.example.demo.domain.Book;
-import com.example.demo.domain.User;
 import com.example.demo.domain.enumeration.RequestStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestDTO implements Serializable {

@@ -34,3 +34,5 @@ build/
 /project-architecture-diagrams/
 /Documentary_info
 /tasks
+/uploads/avatar/**
+/uploads/books/**

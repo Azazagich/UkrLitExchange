@@ -37,7 +37,6 @@ public class MyLibraryWebController {
         model.addAttribute("currentPage", booksPage.getNumber());
         model.addAttribute("totalBooks", booksPage.getTotalElements());
 
-
         return "my-library-page";
     }
 
@@ -63,7 +62,7 @@ public class MyLibraryWebController {
                     "Не вдалося зберегти книгу. Спробуйте ще раз.");
             return "my-library-add";
     }
-        return  "redirect:/web/ukr-lit-exchange/my-library";
+        return "redirect:/web/ukr-lit-exchange/my-library";
     }
 
     @GetMapping("/edit/{bookId}")

@@ -192,6 +192,29 @@
                 </button>
             </div>
         </form>
+
+        <div class="upload-book-cover mt-5 p-4 border rounded shadow-sm bg-light">
+            <h5 class="mb-3">
+                <i class="fas fa-image me-2"></i> Upload Book Cover
+            </h5>
+
+            <form th:action="@{/image/uploadBook/{bookId}(bookId=${book.id})}" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <input type="file"
+                           class="form-control"
+                           id="bookCover"
+                           name="image"
+                           accept="image/*"
+                           required>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-upload me-2"></i> Upload Photo
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 </body>

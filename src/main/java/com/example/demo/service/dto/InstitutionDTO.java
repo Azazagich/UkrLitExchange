@@ -1,13 +1,11 @@
 package com.example.demo.service.dto;
 
-import com.example.demo.domain.User;
 import com.example.demo.domain.enumeration.InstitutionType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +13,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class InstitutionDTO implements Serializable {
