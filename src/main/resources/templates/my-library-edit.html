@@ -170,16 +170,16 @@
                 <textarea class="form-control" th:field="*{description}" placeholder="Add book description"></textarea>
             </div>
 
-            <div class="mb-4">
-                <label class="form-label">
-                    <i class="fas fa-list-check form-icon"></i>
-                    Status
-                </label>
-                <select class="form-select" th:field="*{bookStatus}">
-                    <option th:each="status : ${T(com.example.demo.domain.enumeration.BookStatus).values()}"
-                            th:value="${status}" th:text="${status}"></option>
-                </select>
-            </div>
+<!--            <div class="mb-4">-->
+<!--                <label class="form-label">-->
+<!--                    <i class="fas fa-list-check form-icon"></i>-->
+<!--                    Status-->
+<!--                </label>-->
+<!--                <select class="form-select" th:field="*{bookStatus}">-->
+<!--                    <option th:each="status : ${T(com.example.demo.domain.enumeration.BookStatus).values()}"-->
+<!--                            th:value="${status}" th:text="${status}"></option>-->
+<!--                </select>-->
+<!--            </div>-->
 
             <div class="btn-group">
                 <a th:href="@{/web/ukr-lit-exchange/my-library}" class="btn btn-secondary">

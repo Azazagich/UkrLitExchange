@@ -186,6 +186,36 @@
             opacity: 0.5;
             pointer-events: none;
         }
+
+        .search-form .input-group {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .search-form input.form-control {
+            border-radius: 50px 0 0 50px;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--accent-blue);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-form input.form-control:focus {
+            border-color: var(--dark-blue);
+            box-shadow: 0 0 5px rgba(58, 111, 158, 0.3);
+        }
+
+        .search-form .btn-primary {
+            border-radius: 0 50px 50px 0;
+            padding: 0.75rem 1.25rem;
+            background-color: var(--accent-blue);
+            border-color: var(--accent-blue);
+            transition: background-color 0.3s ease;
+        }
+
+        .search-form .btn-primary:hover {
+            background-color: var(--dark-blue);
+        }
     </style>
 </head>
 <body>
@@ -193,6 +223,14 @@
 
 <main class="library-main">
     <h2 class="mb-4">My Library</h2>
+
+    <form th:action="@{/web/ukr-lit-exchange/my-library}" method="get" class="mb-4 search-form">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search by title or author"
+                   name="query" th:value="${query}">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
 
     <div class="row">
         <div class="col-md-6 col-lg-4" th:each="book : ${userBooks}">
@@ -223,10 +261,10 @@
                             <i class="fas fa-info-circle"></i>
                             <span th:text="${book.description}"></span>
                         </div>
-                        <div class="book-detail-item">
-                            <i class="fas fa-tag"></i>
-                            <span th:text="${book.bookStatus}"></span>
-                        </div>
+<!--                        <div class="book-detail-item">-->
+<!--                            <i class="fas fa-tag"></i>-->
+<!--                            <span th:text="${book.bookStatus}"></span>-->
+<!--                        </div>-->
                     </div>
 
                     <div class="book-actions">

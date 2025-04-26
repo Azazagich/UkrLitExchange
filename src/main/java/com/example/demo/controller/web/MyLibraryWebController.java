@@ -25,13 +25,23 @@ public class MyLibraryWebController {
 
     @GetMapping
     public String libraryPage(
-            Model model,
             @AuthenticationPrincipal UserDetails userDetails,
+            @RequestParam(value = "query", required = false) String searchQuery,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "9") int limit
+            @RequestParam(defaultValue = "9") int limit,
+            Model model
     ){
         Long userId = userService.getByUsername(userDetails.getUsername()).getId();
-        Page<BookDTO> booksPage = bookService.getBooksByOwnerId(userId, page, limit);
+
+        Page<BookDTO> booksPage;
+
+        if (searchQuery != null && !searchQuery.isBlank()){
+             booksPage = bookService.searchBooksByTitle(userId, searchQuery, page, limit);
+            model.addAttribute("query", searchQuery);
+        } else {
+            booksPage = bookService.getBooksByOwnerId(userId, page, limit);
+        }
+
         model.addAttribute("userBooks", booksPage.getContent());
         model.addAttribute("totalPages", booksPage.getTotalPages());
         model.addAttribute("currentPage", booksPage.getNumber());

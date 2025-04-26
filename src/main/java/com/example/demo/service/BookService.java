@@ -27,10 +27,7 @@ public class BookService implements CrudService<BookDTO, Long>{
     private final UserRepository userRepository;
 
 
-//    public List<BookDTO> getBooksByOwnerId(Long id){
-//        log.debug("Get books where user id: {}", id);
-//        return bookMapper.toDTO(bookRepository.getBooksByOwnerId(id));
-//    }
+
 
     @Override
     public BookDTO getById(Long id) {
@@ -40,10 +37,16 @@ public class BookService implements CrudService<BookDTO, Long>{
                 .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
     }
 
+    public Page<BookDTO> searchBooksByTitle(Long userId, String input, int page, int limit){
+        log.debug("Get books where input: {}", input);
+        return bookRepository.findByTitleContainingIgnoreCase(userId, input, PageRequest.of(page, limit,
+                        Sort.by(Sort.Order.desc("createdDate"))))
+                        .map(bookMapper::toDTO);
+    }
 
-    public Page<BookDTO> getBooksByOwnerId(Long id, int page, int limit){
-        log.debug("Get books where user id: {}", id);
-        return bookRepository.getBooksByOwnerId(id, PageRequest.of(page, limit,
+    public Page<BookDTO> getBooksByOwnerId(Long userId, int page, int limit){
+        log.debug("Get books where user id: {}", userId);
+        return bookRepository.getBooksByOwnerId(userId, PageRequest.of(page, limit,
                         Sort.by(Sort.Order.desc("createdDate"))))
                         .map(bookMapper::toDTO);
     }

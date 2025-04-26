@@ -179,16 +179,16 @@
             </div>
 
             <!-- Status -->
-            <div class="mb-4">
-                <label class="form-label">
-                    <i class="fas fa-list-check"></i>
-                    Status
-                </label>
-                <select class="form-select" th:field="*{bookStatus}" required>
-                    <option th:each="status : ${T(com.example.demo.domain.enumeration.BookStatus).values()}"
-                            th:value="${status}" th:text="${status}">Status</option>
-                </select>
-            </div>
+<!--            <div class="mb-4">-->
+<!--                <label class="form-label">-->
+<!--                    <i class="fas fa-list-check"></i>-->
+<!--                    Status-->
+<!--                </label>-->
+<!--                <select class="form-select" th:field="*{bookStatus}" required>-->
+<!--                    <option th:each="status : ${T(com.example.demo.domain.enumeration.BookStatus).values()}"-->
+<!--                            th:value="${status}" th:text="${status}">Status</option>-->
+<!--                </select>-->
+<!--            </div>-->
 
             <!-- Buttons -->
             <div class="d-flex gap-3 justify-content-end mt-5">
