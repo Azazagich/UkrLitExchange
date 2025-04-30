@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.domain.enumeration.BookStatus;
+import com.example.demo.domain.enumeration.ExchangeMethod;
 import com.example.demo.service.dto.BookDTO;
 import com.example.demo.service.BookService;
 import org.junit.jupiter.api.AfterEach;
@@ -33,7 +33,7 @@ public class BookRepositoryTest {
                 .author("John Doe")
                 .genre("Fiction")
                 .language("English")
-                .bookStatus(BookStatus.EXCHANGE)
+                .bookStatus(ExchangeMethod.EXCHANGE)
                 .condition("New")
                 .build();
 

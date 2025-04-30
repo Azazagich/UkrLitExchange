@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -25,8 +26,6 @@ public class BookService implements CrudService<BookDTO, Long>{
     private final BookMapper bookMapper;
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
-
-
 
 
     @Override
@@ -50,6 +49,12 @@ public class BookService implements CrudService<BookDTO, Long>{
                         Sort.by(Sort.Order.desc("createdDate"))))
                         .map(bookMapper::toDTO);
     }
+
+        public List<BookDTO> getBooksByOwnerId(Long id){
+        log.debug("Get books where user id: {}", id);
+        return bookMapper.toDTO(bookRepository.getBooksByOwnerId(id));
+    }
+
 
 
     public void saveBookByOwnerId(Long userId, BookDTO bookDTO){

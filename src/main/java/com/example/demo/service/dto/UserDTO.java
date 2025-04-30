@@ -44,6 +44,4 @@ public class UserDTO implements Serializable {
     private Set<BookDTO> books;
 
     private Set<GroupDTO> groups;
-
-    private InstitutionDTO institution;
 }

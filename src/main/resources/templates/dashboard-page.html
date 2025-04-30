@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
+    <title>Мій кабінет - UkrLitExchange</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header th:replace="~{fragments/header.html :: header}"></header>
+
+<main class="container-main container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Dashboard</h1>
+        <a th:href="@{/web/ukr-lit-exchange/dashboard/create}" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i> Додати запит
+        </a>
+    </div>
+
+    <!-- Вкладки -->
+    <ul class="nav nav-pills mb-4" id="tabs" role="tablist">
+        <li class="nav-item">
+            <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#all" type="button">
+                Усі запити
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#mine" type="button">
+                Мої запити
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <!-- Усі запити -->
+        <div class="tab-pane fade show active" id="all">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4" th:each="request : ${requestAllBooks}">
+                    <div class="card">
+                        <img th:src="${request.senderBook.photoBookUrl}" class="card-img-top" alt="Фото книги">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${request.senderBook.title}">Назва книги</h5>
+                            <p class="card-text" th:text="${request.senderBook.author}">Автор книги</p>
+                            <p class="card-text"><strong>Мова:</strong> <span th:text="${request.senderBook.language}"></span></p>
+                            <p class="card-text"><strong>Жанр:</strong> <span th:text="${request.senderBook.genre}"></span></p>
+                            <p class="card-text"><strong>Опис книги:</strong> <span th:text="${request.senderBook.description}"></span></p>
+                            <div>
+                                <p class="card-text"><strong>Опис запиту:</strong> <span th:text="${request.description}"></span></p>
+                                <p class="card-text"><strong>Статус:</strong> <span th:text="${request.status}"></span></p>
+                            </div>
+                            <div>
+                                <p class="card-text"><strong>Нікнейм:</strong> <span th:text="${request.user.username}"></span></p>
+                                <p class="card-text"><strong>Локація:</strong> <span th:text="${request.user.location}"></span></p>
+                            </div>
+                            <div class="mt-3 d-flex gap-2">
+                                <a th:if="${request.status.name() == 'EXCHANGE'}"
+                                   th:href="@{/web/ukr-lit-exchange/dashboard/edit/{dashboardBookId}(dashboardBookId=${request.id})}"
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-exchange-alt me-1"></i> Обмінятися
+                                </a>
+
+                                <a th:if="${request.status.name() == 'DONATION'}"
+                                   th:href="@{/web/ukr-lit-exchange/dashboard/gift/{dashboardBookId}(dashboardBookId=${request.id})}"
+                                   class="btn btn-sm btn-outline-success">
+                                    <i class="fas fa-gift me-1"></i> Попросити
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Пагінація для Усі запити -->
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mt-4">
+                    <li class="page-item" th:classappend="${currentUsersRequestPage == 0} ? ' disabled' : ''">
+                        <a class="page-link"
+                           th:href="@{/web/ukr-lit-exchange/dashboard(page=${currentUsersRequestPage - 1}, limit=9)}"
+                           aria-label="Попередня">
+                            <span aria-hidden="true">&laquo; Попередня</span>
+                        </a>
+                    </li>
+                    <li class="page-item"
+                        th:each="i : ${#numbers.sequence(0, totalUsersRequestPages - 1)}"
+                        th:classappend="${i == currentUsersRequestPage} ? ' active' : ''">
+                        <a class="page-link"
+                           th:href="@{/web/ukr-lit-exchange/dashboard(page=${i}, limit=9)}"
+                           th:text="${i + 1}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentUsersRequestPage == totalUsersRequestPages - 1} ? ' disabled' : ''">
+                        <a class="page-link"
+                           th:href="@{/web/ukr-lit-exchange/dashboard(page=${currentUsersRequestPage + 1}, limit=9)}"
+                           aria-label="Наступна">
+                            <span aria-hidden="true">Наступна &raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Мої запити -->
+        <div class="tab-pane fade" id="mine">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4" th:each="request : ${requestMyBooks}">
+                    <div class="card">
+                        <img th:src="${request.senderBook.photoBookUrl}" class="card-img-top" alt="Фото книги">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${request.senderBook.title}">Назва книги</h5>
+                            <p class="card-text" th:text="${request.senderBook.author}">Автор книги</p>
+                            <p class="card-text"><strong>Мова:</strong> <span th:text="${request.senderBook.language}"></span></p>
+                            <p class="card-text"><strong>Жанр:</strong> <span th:text="${request.senderBook.genre}"></span></p>
+                            <p class="card-text"><strong>Статус:</strong> <span th:text="${request.status}"></span></p>
+                            <p class="card-text"><strong>Опис:</strong> <span th:text="${request.description}"></span></p>
+                            <div>
+                                <p class="card-text"><strong>Нікнейм:</strong> <span th:text="${request.user.username}"></span></p>
+                                <p class="card-text"><strong>Локація:</strong> <span th:text="${request.user.location}"></span></p>
+                            </div>
+                            <div class="d-flex justify-content-between mt-3">
+                                <a th:href="@{'/web/ukr-lit-exchange/dashboard/edit/' + ${request.id}}"
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form th:action="@{'/web/ukr-lit-exchange/dashboard/perform_delete/' + ${request.id}}" method="post">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Пагінація для Мої запити -->
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mt-4">
+                    <li class="page-item" th:classappend="${currentMyBooksPage == 0} ? ' disabled' : ''">
+                        <a class="page-link"
+                           th:href="@{/web/ukr-lit-exchange/dashboard(page=${currentMyBooksPage - 1}, limit=9)}"
+                           aria-label="Попередня">
+                            <span aria-hidden="true">&laquo; Попередня</span>
+                        </a>
+                    </li>
+                    <li class="page-item"
+                        th:each="i : ${#numbers.sequence(0, totalMyBooksPages - 1)}"
+                        th:classappend="${i == currentMyBooksPage} ? ' active' : ''">
+                        <a class="page-link"
+                           th:href="@{/web/ukr-lit-exchange/dashboard(page=${i}, limit=9)}"
+                           th:text="${i + 1}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentMyBooksPage == totalMyBooksPages - 1} ? ' disabled' : ''">
+                        <a class="page-link"
+                           th:href="@{/web/ukr-lit-exchange/dashboard(page=${currentMyBooksPage + 1}, limit=9)}"
+                           aria-label="Наступна">
+                            <span aria-hidden="true">Наступна &raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer.html :: footer}"></footer>
+</body>
+</html>

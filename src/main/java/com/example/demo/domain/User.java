@@ -65,11 +65,6 @@ public class User implements UserDetails {
     private Set<Group> groups;
 
     @EqualsAndHashCode.Exclude
-    @ManyToOne
-    @JoinColumn(name = "institution_id")
-    private Institution institution;
-
-    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "reviewer")
     private Set<Review> givenReviews;
 

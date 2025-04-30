@@ -1,6 +1,6 @@
 package com.example.demo.domain.enumeration;
 
-public enum BookStatus {
+public enum ExchangeMethod {
     EXCHANGE,
     DONATION
 }

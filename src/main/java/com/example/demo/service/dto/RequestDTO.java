@@ -21,9 +21,6 @@ public class RequestDTO implements Serializable {
     @NotNull(message = "Request status cannot be null")
     private RequestStatus status;
 
-    @Positive(message = "Price must be positive")
-    private double price;
-
     private UserDTO sender;
 
     private UserDTO receiver;

@@ -4,14 +4,13 @@ import com.example.demo.domain.enumeration.ExchangeMethod;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "request")
-public class Request extends AbstractAuditingEntity{
+@Table(name = "request_user_exchange")
+public class RequestBoard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -19,26 +18,18 @@ public class Request extends AbstractAuditingEntity{
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ExchangeMethod exchangeMethod;
+    private ExchangeMethod status;
+
+    @Column
+    private String description;
 
     @EqualsAndHashCode.Exclude
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
-    private User sender;
-
-    @EqualsAndHashCode.Exclude
-    @ManyToOne
-    @JoinColumn(name = "receiver_id", nullable = false)
-    private User receiver;
+    private User user;
 
     @EqualsAndHashCode.Exclude
     @ManyToOne
     @JoinColumn(name = "sender_book_id", nullable = false)
     private Book senderBook;
-
-    //TODO (remove nullable for receiver cause if it's donation we mustn't send book)
-    @EqualsAndHashCode.Exclude
-    @ManyToOne
-    @JoinColumn(name = "receiver_book_id")
-    private Book receiverBook;
 }

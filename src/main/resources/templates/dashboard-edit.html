@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редагування запиту - UkrLitExchange</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-blue: #2A4F6E;
+            --accent-blue: #3B6A94;
+            --gradient-blue: linear-gradient(135deg, var(--dark-blue) 0%, var(--accent-blue) 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --shadow-primary: 0 8px 32px rgba(42, 79, 110, 0.15);
+        }
+
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .request-form-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: var(--shadow-primary);
+            padding: 2.5rem;
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .form-control, .form-select {
+            border-radius: 12px;
+            padding: 0.75rem 1.25rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(42, 79, 110, 0.25);
+        }
+
+        .btn-primary {
+            background: var(--gradient-blue);
+            color: white !important;
+            padding: 0.75rem 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 79, 110, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white !important;
+            padding: 0.75rem 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<main class="container py-5">
+    <div class="request-form-card mb-5">
+        <h2 class="mb-4 text-center">
+            <i class="fas fa-pen-to-square me-2"></i> Редагувати запит
+        </h2>
+
+        <form th:action="@{/web/ukr-lit-exchange/dashboard/perform_edit}" method="post" th:object="${dashboardBook}">
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="mb-4">
+                <label class="form-label"><i class="fas fa-book"></i> Оберіть книгу</label>
+                <select class="form-select" th:field="*{senderBook.id}" required>
+                    <option value="">-- Виберіть книгу --</option>
+                    <th:block th:each="book : ${books}">
+                        <option th:value="${book.id}" th:text="${book.title}"></option>
+                    </th:block>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label"><i class="fas fa-list-check"></i> Статус</label>
+                <select class="form-select" th:field="*{status}" required>
+                    <option value="">-- Виберіть статус --</option>
+                    <th:block th:each="status : ${statuses}">
+                        <option th:value="${status}" th:text="${status}"></option>
+                    </th:block>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label"><i class="fas fa-align-left"></i> Опис</label>
+                <textarea class="form-control" th:field="*{description}" placeholder="Що хочеш отримати в обмін?" required></textarea>
+            </div>
+
+            <div class="d-flex gap-3 justify-content-end mt-5">
+                <a th:href="@{/web/ukr-lit-exchange/dashboard}" class="btn btn-secondary">
+                    <i class="fas fa-times me-2"></i> Скасувати
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i> Зберегти зміни
+                </button>
+            </div>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>

@@ -37,9 +37,9 @@ public class MyLibraryWebController {
 
         if (searchQuery != null && !searchQuery.isBlank()){
              booksPage = bookService.searchBooksByTitle(userId, searchQuery, page, limit);
-            model.addAttribute("query", searchQuery);
+             model.addAttribute("query", searchQuery);
         } else {
-            booksPage = bookService.getBooksByOwnerId(userId, page, limit);
+             booksPage = bookService.getBooksByOwnerId(userId, page, limit);
         }
 
         model.addAttribute("userBooks", booksPage.getContent());

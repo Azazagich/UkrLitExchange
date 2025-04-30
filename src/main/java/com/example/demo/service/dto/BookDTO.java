@@ -1,6 +1,6 @@
 package com.example.demo.service.dto;
 
-import com.example.demo.domain.enumeration.BookStatus;
+import com.example.demo.domain.enumeration.ExchangeMethod;
 import jakarta.validation.constraints.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Set;
 
 @Data
 @Builder
@@ -36,7 +35,7 @@ public class BookDTO implements Serializable {
     private String language;
 
     @NotNull(message = "Book status cannot be null")
-    private BookStatus bookStatus;
+    private ExchangeMethod bookStatus;
 
     @NotBlank(message = "Condition cannot be empty")
     @Size(max = 30, message = "Condition must be at most 30 characters")

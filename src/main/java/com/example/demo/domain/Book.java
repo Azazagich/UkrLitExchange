@@ -1,6 +1,5 @@
 package com.example.demo.domain;
 
-import com.example.demo.domain.enumeration.BookStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,10 +28,7 @@ public class Book extends AbstractAuditingEntity{
     @Column(nullable = false, length = 50)
     private String language;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private BookStatus bookStatus;
-
+//  TODO do (enum) for this field
     @Column(nullable = false, length = 30)
     private String condition;
 

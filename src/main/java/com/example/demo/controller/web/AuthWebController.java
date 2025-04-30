@@ -4,6 +4,7 @@ import com.example.demo.service.RegistrationService;
 import com.example.demo.service.dto.UserRegistrationDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class AuthWebController {
 
     private final RegistrationService registrationService;

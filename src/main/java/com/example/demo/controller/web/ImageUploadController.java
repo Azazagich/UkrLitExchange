@@ -2,6 +2,7 @@ package com.example.demo.controller.web;
 
 import com.example.demo.service.ImageUploadService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/image")
 @RequiredArgsConstructor
+@Slf4j
 public class ImageUploadController {
 
     private final ImageUploadService imageUploadService;
