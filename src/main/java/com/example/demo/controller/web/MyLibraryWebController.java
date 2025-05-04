@@ -1,5 +1,6 @@
 package com.example.demo.controller.web;
 
+import com.example.demo.domain.enumeration.BookCondition;
 import com.example.demo.service.BookService;
 import com.example.demo.service.UserService;
 import com.example.demo.service.dto.BookDTO;
@@ -53,6 +54,7 @@ public class MyLibraryWebController {
     @GetMapping("/save")
     public String addBookForm(Model model){
         model.addAttribute("newBook", new BookDTO());
+        model.addAttribute("condition", BookCondition.values());
         return "my-library-add";
     }
 
@@ -82,6 +84,8 @@ public class MyLibraryWebController {
     ){
         BookDTO bookDTO = bookService.getById(id);
         model.addAttribute("book", bookDTO);
+        model.addAttribute("condition", BookCondition.values());
+
         return "my-library-edit";
     }
 

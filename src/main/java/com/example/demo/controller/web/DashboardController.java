@@ -2,10 +2,9 @@ package com.example.demo.controller.web;
 
 import com.example.demo.domain.enumeration.ExchangeMethod;
 import com.example.demo.service.BookService;
-import com.example.demo.service.RequestBoardService;
+import com.example.demo.service.DashboardService;
 import com.example.demo.service.UserService;
-import com.example.demo.service.dto.BookDTO;
-import com.example.demo.service.dto.RequestBoardDTO;
+import com.example.demo.service.dto.DashboardDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +23,7 @@ public class DashboardController {
 
     private final UserService userService;
     private final BookService bookService;
-    private final RequestBoardService requestBoardService;
+    private final DashboardService dashboardService;
 
     @GetMapping
     public String dashboardPage(
@@ -35,8 +34,8 @@ public class DashboardController {
     ) {
         Long userId = userService.getByUsername(userDetails.getUsername()).getId();
 
-        Page<RequestBoardDTO> dashboardMyRequest = requestBoardService.getRequestBookByOwnerId(userId, page, limit);
-        Page<RequestBoardDTO> dashboardRequest = requestBoardService.getRequestBooksExceptOwnerId(userId, page, limit);
+        Page<DashboardDTO> dashboardMyRequest = dashboardService.getRequestBookByOwnerId(userId, page, limit);
+        Page<DashboardDTO> dashboardRequest = dashboardService.getRequestBooksExceptOwnerId(userId, page, limit);
 
         model.addAttribute("requestAllBooks", dashboardRequest.getContent());
         model.addAttribute("totalUsersRequestPages", dashboardRequest.getTotalPages());
@@ -57,7 +56,7 @@ public class DashboardController {
     public String addBookDashboardForm(@AuthenticationPrincipal UserDetails userDetails, Model model){
         Long userId = userService.getByUsername(userDetails.getUsername()).getId();
 
-        model.addAttribute("newRequestBook", new RequestBoardDTO());
+        model.addAttribute("newRequestBook", new DashboardDTO());
         model.addAttribute("books", bookService.getBooksByOwnerId(userId));
         model.addAttribute("statuses", ExchangeMethod.values());
 
@@ -67,11 +66,11 @@ public class DashboardController {
     @PostMapping("/perform_create")
     public String addBookDashboard(
             @AuthenticationPrincipal UserDetails userDetails,
-            @ModelAttribute("newRequestBook") @Valid RequestBoardDTO requestBoardDTO
+            @ModelAttribute("newRequestBook") @Valid DashboardDTO dashboardDTO
     ) {
-        requestBoardService.saveDashboardBookByOwnerId(
+        dashboardService.saveDashboardBookByOwnerId(
                 userService.getByUsername(userDetails.getUsername()).getId(),
-                requestBoardDTO
+                dashboardDTO
         );
 
         return "redirect:/web/ukr-lit-exchange/dashboard";
@@ -84,9 +83,9 @@ public class DashboardController {
             Model model
     ){
         Long userId = userService.getByUsername(userDetails.getUsername()).getId();
-        RequestBoardDTO RequestBoardDTO = requestBoardService.getById(dashboardBookId);
+        DashboardDTO DashboardDTO = dashboardService.getById(dashboardBookId);
 
-        model.addAttribute("dashboardBook", RequestBoardDTO);
+        model.addAttribute("dashboardBook", DashboardDTO);
         model.addAttribute("books", bookService.getBooksByOwnerId(userId));
         model.addAttribute("statuses", ExchangeMethod.values());
 
@@ -95,15 +94,15 @@ public class DashboardController {
 
     @PostMapping("/perform_edit")
     public String updateBook(
-            @ModelAttribute("dashboardBook") RequestBoardDTO requestBoardDTO
+            @ModelAttribute("dashboardBook") DashboardDTO dashboardDTO
     ){
-        requestBoardService.update(requestBoardDTO.getId(), requestBoardDTO);
+        dashboardService.update(dashboardDTO.getId(), dashboardDTO);
         return "redirect:/web/ukr-lit-exchange/dashboard";
     }
 
     @PostMapping("/perform_delete/{dashboardBookId}")
     public String deleteBook(@PathVariable("dashboardBookId") Long dashboardBookId){
-        requestBoardService.deleteById(dashboardBookId);
+        dashboardService.deleteById(dashboardBookId);
         return "redirect:/web/ukr-lit-exchange/dashboard";
     }
 }

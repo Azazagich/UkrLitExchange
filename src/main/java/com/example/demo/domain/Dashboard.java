@@ -9,8 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "request_user_exchange")
-public class RequestBoard {
+@Table
+public class Dashboard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

@@ -154,12 +154,17 @@
                 <input type="text" class="form-control" th:field="*{language}" placeholder="Enter book language">
             </div>
 
+            <!-- Condition -->
             <div class="mb-4">
                 <label class="form-label">
-                    <i class="fas fa-heart-circle-check form-icon"></i>
+                    <i class="fas fa-heart-circle-check"></i>
                     Condition
                 </label>
-                <input type="text" class="form-control" th:field="*{condition}" placeholder="Describe book condition">
+                <select class="form-select" th:field="*{condition}">
+                    <option th:each="cond : ${condition}"
+                            th:value="${cond}" th:text="${condStat.current.getCondition()}">
+                    </option>
+                </select>
             </div>
 
             <div class="mb-4">

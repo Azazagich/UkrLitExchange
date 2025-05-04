@@ -62,13 +62,13 @@
                             </div>
                             <div class="mt-3 d-flex gap-2">
                                 <a th:if="${request.status.name() == 'EXCHANGE'}"
-                                   th:href="@{/web/ukr-lit-exchange/dashboard/edit/{dashboardBookId}(dashboardBookId=${request.id})}"
+                                   th:href="@{'/web/ukr-lit-exchange/request/create/exchange-request/' + ${request.id}}"
                                    class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-exchange-alt me-1"></i> Обмінятися
                                 </a>
 
                                 <a th:if="${request.status.name() == 'DONATION'}"
-                                   th:href="@{/web/ukr-lit-exchange/dashboard/gift/{dashboardBookId}(dashboardBookId=${request.id})}"
+                                   th:href="@{'/web/ukr-lit-exchange/request/create/donation-request/' + ${request.id}}"
                                    class="btn btn-sm btn-outline-success">
                                     <i class="fas fa-gift me-1"></i> Попросити
                                 </a>

@@ -68,14 +68,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "reviewer")
     private Set<Review> givenReviews;
 
-    @EqualsAndHashCode.Exclude
-    @ManyToMany
-    @JoinTable(name = "user_friends",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "friend_id")
-    )
-    private Set<User> friends;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(getRole().getAuthority());

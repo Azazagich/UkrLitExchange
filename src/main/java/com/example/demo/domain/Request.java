@@ -1,9 +1,12 @@
 package com.example.demo.domain;
 
-import com.example.demo.domain.enumeration.ExchangeMethod;
+import com.example.demo.domain.enumeration.DeliveryMethod;
+import com.example.demo.domain.enumeration.RequestStatus;
 import jakarta.persistence.*;
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
@@ -11,34 +14,35 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Table(name = "request")
-public class Request extends AbstractAuditingEntity{
+public class Request {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Column
+    private String message;
+
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ExchangeMethod exchangeMethod;
+    @Column
+    private RequestStatus requestStatus;
 
-    @EqualsAndHashCode.Exclude
-    @ManyToOne
-    @JoinColumn(name = "sender_id", nullable = false)
-    private User sender;
+    @Enumerated(EnumType.STRING)
+    @Column
+    private DeliveryMethod deliveryMethod;
 
-    @EqualsAndHashCode.Exclude
     @ManyToOne
-    @JoinColumn(name = "receiver_id", nullable = false)
-    private User receiver;
+    private Book senderBook;  // Книга яку відсилають при запиті на обмін
 
-    @EqualsAndHashCode.Exclude
     @ManyToOne
-    @JoinColumn(name = "sender_book_id", nullable = false)
-    private Book senderBook;
+    private Book receiverBook; // Книга в дашборд
 
-    //TODO (remove nullable for receiver cause if it's donation we mustn't send book)
-    @EqualsAndHashCode.Exclude
     @ManyToOne
-    @JoinColumn(name = "receiver_book_id")
-    private Book receiverBook;
+    private User receiver; // Користувач який виставив оголошення в дашборд та отримує запити
+
+    @ManyToOne
+    private User sender; // Користувач який надсилає запит
+
+    @ManyToOne
+    private Dashboard dashboard;
 }
