@@ -99,7 +99,15 @@
             <!-- Приховане поле з dashboardDTO.id -->
             <input type="hidden" th:field="*{dashboard.id}" />
 
-            <button type="submit" class="btn btn-primary">Надіслати запит</button>
+            <div class="d-flex gap-3 justify-content-end mt-5">
+                <!-- Кнопка скасування -->
+                <a th:href="@{/web/ukr-lit-exchange/dashboard}" class="btn btn-secondary">
+                    <i class="fas fa-times me-2"></i> Скасувати
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane me-2"></i> Надіслати запит
+                </button>
+            </div>
         </form>
     </div>
 </main>

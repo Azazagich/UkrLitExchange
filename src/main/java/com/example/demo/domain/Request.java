@@ -31,17 +31,23 @@ public class Request {
     @Column
     private DeliveryMethod deliveryMethod;
 
-    @ManyToOne
-    private Book senderBook;  // Книга яку відсилають при запиті на обмін
+    @Column
+    private Boolean receiverCompleted;
+
+    @Column
+    private Boolean senderCompleted;
+
+    @OneToOne
+    private Book senderBook;
+
+    @OneToOne
+    private Book receiverBook;
 
     @ManyToOne
-    private Book receiverBook; // Книга в дашборд
+    private User receiver;
 
     @ManyToOne
-    private User receiver; // Користувач який виставив оголошення в дашборд та отримує запити
-
-    @ManyToOne
-    private User sender; // Користувач який надсилає запит
+    private User sender;
 
     @ManyToOne
     private Dashboard dashboard;

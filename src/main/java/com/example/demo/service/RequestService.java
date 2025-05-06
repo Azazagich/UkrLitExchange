@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,44 @@ public class RequestService implements CrudService<RequestDTO, Long>{
 //                .map(orderMapper::toDTO)
 //                .collect(Collectors.toList());
 //    }
+
+
+    public void acceptRequest(Long requestId) {
+        RequestDTO request = getById(requestId);
+        request.setRequestStatus(RequestStatus.ACCEPTED);
+        update(requestId, request);
+    }
+
+    public void declineRequest(Long requestId) {
+        RequestDTO request = getById(requestId);
+        request.setRequestStatus(RequestStatus.DECLINE);
+        update(requestId, request);
+    }
+
+    public void completeRequest(Long requestId, Long currentUserId) {
+        RequestDTO request = getById(requestId);
+
+        if (request.getSender().getId().equals(currentUserId)) {
+            request.setSenderCompleted(true);
+            request.setRequestStatus(RequestStatus.PRE_COMPLETED);
+        } else if (request.getReceiver().getId().equals(currentUserId)) {
+            request.setReceiverCompleted(true);
+            request.setRequestStatus(RequestStatus.PRE_COMPLETED);
+        }
+
+        if (Boolean.TRUE.equals(request.getSenderCompleted()) && Boolean.TRUE.equals(request.getReceiverCompleted())) {
+            request.setRequestStatus(RequestStatus.COMPLETED);
+        }
+
+        update(requestId, request);
+    }
+
+    public List<RequestDTO> getСompletedOrders(Long userId) {
+        return requestRepository.findByRequestStatusAndUserInvolved(RequestStatus.PRE_COMPLETED, userId)
+                .stream()
+                .map(requestMapper::toDTO)
+                .collect(Collectors.toList());
+    }
 
     public List<RequestDTO> getPendingOrders(Long userId) {
         return requestRepository.findByRequestStatusAndUserInvolved(RequestStatus.PENDING, userId)

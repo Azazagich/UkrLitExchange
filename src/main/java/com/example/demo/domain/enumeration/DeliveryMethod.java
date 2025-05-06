@@ -2,7 +2,6 @@ package com.example.demo.domain.enumeration;
 
 import lombok.Getter;
 
-//TODO delete
 @Getter
 public enum DeliveryMethod {
     PERSONAL_MEETING("Особиста зустріч"),

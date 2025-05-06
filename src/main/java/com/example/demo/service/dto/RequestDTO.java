@@ -2,6 +2,7 @@ package com.example.demo.service.dto;
 
 import com.example.demo.domain.enumeration.DeliveryMethod;
 import com.example.demo.domain.enumeration.RequestStatus;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,10 @@ public class RequestDTO implements Serializable {
     private UserDTO receiver;
 
     private UserDTO sender;
+
+    private Boolean receiverCompleted;
+
+    private Boolean senderCompleted;
 
     private DeliveryMethod deliveryMethod;
 

@@ -1,6 +1,7 @@
 package com.example.demo.controller.web;
 
 
+import com.example.demo.domain.User;
 import com.example.demo.domain.enumeration.RequestStatus;
 import com.example.demo.service.BookService;
 import com.example.demo.service.RequestService;
@@ -32,13 +33,42 @@ public class RequestWebController {
 
     @GetMapping
     public String requestPage(@AuthenticationPrincipal UserDetails userDetails, Model model){
-        Long userId = userService.getByUsername(userDetails.getUsername()).getId();
+        UserDTO user = userService.getByUsername(userDetails.getUsername());
 
-        model.addAttribute("pendingOrders", requestService.getPendingOrders(userId));
-        model.addAttribute("acceptedOrders", requestService.getAcceptedOrders(userId));
-        model.addAttribute("sentOrders", requestService.getSentOrders(userId));
+        model.addAttribute("pendingOrders", requestService.getPendingOrders(user.getId()));
+        model.addAttribute("acceptedOrders", requestService.getAcceptedOrders(user.getId()));
+        model.addAttribute("sentOrders", requestService.getSentOrders(user.getId()));
+        model.addAttribute("completedOrders", requestService.getСompletedOrders(user.getId()));
+        model.addAttribute("currentUser", user);
 
         return "request-page";
+    }
+
+
+    @PostMapping("/accept")
+    public String acceptRequest(@RequestParam Long requestId) {
+        requestService.acceptRequest(requestId);
+        return "redirect:/web/ukr-lit-exchange/request";
+    }
+
+    @PostMapping("/decline")
+    public String declineRequest(@RequestParam Long requestId) {
+        requestService.declineRequest(requestId);
+        return "redirect:/web/ukr-lit-exchange/request";
+    }
+
+    @PostMapping("/complete")
+    public String completeRequest(@AuthenticationPrincipal UserDetails userDetails, @RequestParam Long requestId) {
+        UserDTO user = userService.getByUsername(userDetails.getUsername());
+
+        requestService.completeRequest(requestId, user.getId());
+        return "redirect:/web/ukr-lit-exchange/request";
+    }
+
+    @PostMapping("/cancel")
+    public String cancelRequest(@RequestParam Long requestId) {
+        requestService.deleteById(requestId);
+        return "redirect:/web/ukr-lit-exchange/request";
     }
 
     @GetMapping("/create/exchange-request/{requestBoardId}")
