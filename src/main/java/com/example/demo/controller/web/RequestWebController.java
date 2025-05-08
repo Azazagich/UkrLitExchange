@@ -60,7 +60,6 @@ public class RequestWebController {
     @PostMapping("/complete")
     public String completeRequest(@AuthenticationPrincipal UserDetails userDetails, @RequestParam Long requestId) {
         UserDTO user = userService.getByUsername(userDetails.getUsername());
-
         requestService.completeRequest(requestId, user.getId());
         return "redirect:/web/ukr-lit-exchange/request";
     }

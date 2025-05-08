@@ -219,26 +219,20 @@
                             <h5 class="mb-0" th:text="${request.receiverBook?.title}">Назва книги</h5>
                         </div>
                         <div class="card-body">
-                            <p><strong>Обмін на:</strong> <span th:text="${request.senderBook?.title}">Книга відправника</span></p>
+                            <p th:if="${request.senderBook?.title != null}">
+                                <strong>Обмін на:</strong> <span th:text="${request.receiver.location}">Книга відправника</span>
+                            </p>
                             <p><strong>Повідомлення:</strong> <span th:text="${request.message}">повідомлення</span></p>
                             <p><strong>Спосіб доставки:</strong> <span th:text="${request.deliveryMethod}">доставка</span></p>
                             <p><strong>Статус:</strong> <span class="badge bg-success">Прийнято</span></p>
 
                             <div class="mt-4 border-top pt-3">
-                                <h6>📬 Контакти відправника:</h6>
+                                <h6>📬 Контакти користувача:</h6>
                                 <ul class="list-unstyled mb-3">
                                     <li><strong>ПІБ:</strong> <span th:text="${request.sender.fullName}">ПІБ</span></li>
                                     <li><strong>Email:</strong> <a th:href="'mailto:' + ${request.sender.email}" th:text="${request.sender.email}">email</a></li>
                                     <li><strong>Телефон:</strong> <span th:text="${request.sender.phoneNumber}">телефон</span></li>
                                     <li><strong>Локація:</strong> <span th:text="${request.sender.location}">локація</span></li>
-                                </ul>
-
-                                <h6>📦 Контакти отримувача:</h6>
-                                <ul class="list-unstyled">
-                                    <li><strong>ПІБ:</strong> <span th:text="${request.receiver.fullName}">ПІБ</span></li>
-                                    <li><strong>Email:</strong> <a th:href="'mailto:' + ${request.receiver.email}" th:text="${request.receiver.email}">email</a></li>
-                                    <li><strong>Телефон:</strong> <span th:text="${request.receiver.phoneNumber}">телефон</span></li>
-                                    <li><strong>Локація:</strong> <span th:text="${request.receiver.location}">локація</span></li>
                                 </ul>
                             </div>
 
@@ -259,17 +253,14 @@
                 Немає завершених заявок.
             </div>
             <div class="row">
-                <div class="col-md-6" th:each="request : ${completedOrders}"
-                     th:if="${request.receiver?.id == currentUser.id or request.sender?.id == currentUser.id}">
+                <div class="col-md-6"
+                     th:each="request : ${completedOrders}"
+                     th:if="${request.receiver?.id == currentUser.id}">
                     <div class="card mb-4 shadow-sm border-secondary">
                         <div class="card-header bg-secondary text-white">
                             <h5 class="mb-0" th:text="'Обмін: ' + ${request.receiverBook?.title}">Обмін</h5>
                         </div>
                         <div class="card-body">
-                            <p><strong>Статус:</strong>
-                                <span th:if="${request.requestStatus.name() == 'PRE_COMPLETED'}" class="badge bg-warning">Очікує підтвердження</span>
-                                <span th:if="${request.requestStatus.name() == 'COMPLETED'}" class="badge bg-success">Завершено</span>
-                            </p>
 
                             <p><strong>Ви:</strong>
                                 <span th:text="${request.sender?.id == currentUser.id} ? 'Відправник' : 'Отримувач'">роль</span>
@@ -282,28 +273,49 @@
                             <div class="mt-3">
                                 <h6>👤 Партнер по обміну:</h6>
                                 <ul class="list-unstyled">
-                                    <li><strong>Ім’я:</strong> <span th:text="${request.sender?.id == currentUser.id} ? ${request.receiver.fullName} : ${request.sender.fullName}">Ім'я</span></li>
-                                    <li><strong>Email:</strong> <a th:href="'mailto:' + (${request.sender?.id == currentUser.id} ? ${request.receiver.email} : ${request.sender.email})"
-                                                                   th:text="${request.sender?.id == currentUser.id} ? ${request.receiver.email} : ${request.sender.email}">email</a></li>
+                                    <li><strong>Ім’я:</strong>
+                                        <span th:text="${request.sender?.id == currentUser.id} ? ${request.receiver.fullName} : ${request.sender.fullName}">Ім'я</span>
+                                    </li>
+                                    <li><strong>Email:</strong>
+                                        <a th:href="'mailto:' + (${request.sender?.id == currentUser.id} ? ${request.receiver.email} : ${request.sender.email})"
+                                           th:text="${request.sender?.id == currentUser.id} ? ${request.receiver.email} : ${request.sender.email}">email</a>
+                                    </li>
                                 </ul>
                             </div>
 
                             <p><strong>Повідомлення:</strong> <span th:text="${request.message}">повідомлення</span></p>
+                            <p><strong>Статус:</strong>
+                                <span th:if="${request.requestStatus.name() == 'PRE_COMPLETED'}" class="badge bg-warning">Очікує підтвердження</span>
+                                <span th:if="${request.requestStatus.name() == 'COMPLETED'}" class="badge bg-secondary">Завершено</span>
+                            </p>
+                        </div>
+                        <div class="mt-3 d-flex gap-2">
+                            <form th:if="${request.requestStatus.name() == 'PRE_COMPLETED'}"
+                                  th:action="@{/web/ukr-lit-exchange/request/complete}" method="post">
+                                <input type="hidden" name="requestId" th:value="${request.id}" />
+                                <button class="btn btn-success btn-sm w-100" type="submit">Завершити обмін</button>
+                            </form>
+
+                            <a th:if="${request.requestStatus.name() == 'COMPLETED'}"
+                               th:href="@{/web/ukr-lit-exchange/feedback/new(requestId=${request.id})}"
+                               class="btn btn-outline-primary btn-sm w-100">
+                                Залишити відгук
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-
-    <!------------------------ My Sent Orders------------------------------------------->
-
+        <!------------------------ My Sent Orders------------------------------------------->
         <div class="tab-pane fade" id="mine" role="tabpanel" aria-labelledby="mine-tab">
             <div th:if="${#lists.isEmpty(sentOrders)}" class="text-center text-muted my-4">
                 Ви ще не надсилали жодної заявки.
             </div>
-            <div class="row" th:each="request : ${sentOrders}">
-                <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6"
+                     th:each="request : ${sentOrders}"
+                     th:if="${request.sender?.id == currentUser.id}">
                     <div class="card mb-4 shadow-sm">
                         <div class="card-header bg-info text-white">
                             <h5 class="mb-0"
@@ -312,7 +324,6 @@
                             </h5>
                         </div>
                         <div class="card-body">
-
                             <div class="mb-3" th:if="${request.receiverBook != null}">
                                 <h6>🎯 Ви хочете отримати:</h6>
                                 <img th:if="${request.receiverBook.photoBookUrl != null}"
@@ -331,7 +342,8 @@
                                 <p><strong>Мова:</strong> <span th:text="${request.senderBook.language}">Мова</span></p>
                                 <p><strong>Стан:</strong> <span th:text="${request.senderBook.condition}">Стан</span></p>
                             </div>
-                                <br/>
+
+                            <br/>
                             <p><strong>Отримувач:</strong> <span th:text="${request.receiver?.username}">отримувач</span></p>
                             <p><strong>Повідомлення:</strong> <span th:text="${request.message}">повідомлення</span></p>
 
@@ -339,6 +351,7 @@
                                 <span th:if="${request.requestStatus.name() == 'PENDING'}" class="badge bg-warning">Очікує</span>
                                 <span th:if="${request.requestStatus.name() == 'ACCEPTED'}" class="badge bg-success">Прийнято</span>
                                 <span th:if="${request.requestStatus.name() == 'DECLINE'}" class="badge bg-danger">Відхилено</span>
+                                <span th:if="${request.requestStatus.name() == 'PRE_COMPLETED'}" class="badge bg-secondary">Очікується відповідь від вас</span>
                                 <span th:if="${request.requestStatus.name() == 'COMPLETED'}" class="badge bg-secondary">Завершено</span>
                             </p>
 
@@ -351,6 +364,9 @@
                                 <p th:if="${request.receiver?.phoneNumber != null}">
                                     <strong>Телефон:</strong> <span th:text="${request.receiver.phoneNumber}">телефон</span>
                                 </p>
+                                <p th:if="${request.receiver?.location != null}">
+                                    <strong>Локація:</strong> <span th:text="${request.receiver.location}">локація</span>
+                                </p>
                             </div>
 
                             <div class="mt-3 d-flex gap-2">
@@ -360,11 +376,24 @@
                                     <button class="btn btn-outline-danger btn-sm w-100" type="submit">Скасувати заявку</button>
                                 </form>
                             </div>
+                            <div class="mt-3 d-flex gap-2">
+                                <form th:if="${request.requestStatus.name() == 'PRE_COMPLETED' || request.requestStatus.name() == 'ACCEPTED'}"
+                                      th:action="@{/web/ukr-lit-exchange/request/complete}" method="post">
+                                    <input type="hidden" name="requestId" th:value="${request.id}" />
+                                    <button class="btn btn-success btn-sm w-100" type="submit">Завершити обмін</button>
+                                </form>
+                            </div>
+                            <a th:if="${request.requestStatus.name() == 'COMPLETED'}"
+                               th:href="@{'/web/ukr-lit-exchange/feedback/new' + ${request.id}}"
+                               class="btn btn-outline-primary btn-sm w-100">
+                                Залишити відгук
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
 
     </div>
 

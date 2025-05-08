@@ -15,17 +15,9 @@ import java.time.Instant;
 @MappedSuperclass
 public abstract class AbstractAuditingEntity implements Serializable {
 
-    @CreatedBy
-    @Column(name = "created_by", length = 50, updatable = false)
-    private String createdBy;
-
     @CreatedDate
     @Column(name = "created_date", updatable = false)
     private Instant createdDate = Instant.now();
-
-    @LastModifiedBy
-    @Column(name = "last_modified_by", length = 50)
-    private String lastModifiedBy;
 
     @LastModifiedDate
     @Column(name = "last_modified_date")

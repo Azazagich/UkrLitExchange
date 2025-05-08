@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/web/ukr-lit-exchange/dashboard")
 @RequiredArgsConstructor
 @Slf4j
-public class DashboardController {
+public class DashboardWebController {
 
     private final UserService userService;
     private final BookService bookService;
@@ -28,6 +28,8 @@ public class DashboardController {
     @GetMapping
     public String dashboardPage(
             @AuthenticationPrincipal UserDetails userDetails,
+            @RequestParam(value = "query", required = false) String searchQuery,
+            @RequestParam(value = "type", required = false) ExchangeMethod selectedType,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "9") int limit,
             Model model
@@ -35,13 +37,22 @@ public class DashboardController {
         Long userId = userService.getByUsername(userDetails.getUsername()).getId();
 
         Page<DashboardDTO> dashboardMyRequest = dashboardService.getRequestBookByOwnerId(userId, page, limit);
-        Page<DashboardDTO> dashboardRequest = dashboardService.getRequestBooksExceptOwnerId(userId, page, limit);
+        Page<DashboardDTO> dashboardRequest;
+
+        if ((searchQuery != null && !searchQuery.isBlank()) || selectedType != null) {
+            dashboardRequest = dashboardService.getRequestDashboardsExceptOwnerIdByFilter(
+                    userId, searchQuery, selectedType, page, limit);
+        } else {
+            dashboardRequest = dashboardService.getRequestDashboardsExceptOwnerId(userId, page, limit);
+        }
+
+        model.addAttribute("query", searchQuery);
+        model.addAttribute("selectedType", selectedType != null ? selectedType.name() : "");
 
         model.addAttribute("requestAllBooks", dashboardRequest.getContent());
         model.addAttribute("totalUsersRequestPages", dashboardRequest.getTotalPages());
         model.addAttribute("currentUsersRequestPage", dashboardRequest.getNumber());
         model.addAttribute("totalUserBooks", dashboardRequest.getTotalElements());
-
 
         model.addAttribute("requestMyBooks", dashboardMyRequest.getContent());
         model.addAttribute("totalMyBooksPages", dashboardMyRequest.getTotalPages());
@@ -50,7 +61,6 @@ public class DashboardController {
 
         return "dashboard-page";
     }
-
 
     @GetMapping("/create")
     public String addBookDashboardForm(@AuthenticationPrincipal UserDetails userDetails, Model model){

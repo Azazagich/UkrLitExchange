@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Залишити відгук</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --dark-blue: #2A4F6E;
+            --accent-blue: #3B6A94;
+            --gradient-blue: linear-gradient(135deg, var(--dark-blue) 0%, var(--accent-blue) 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --shadow-primary: 0 8px 32px rgba(42, 79, 110, 0.15);
+        }
+
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .review-form-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: var(--shadow-primary);
+            padding: 2.5rem;
+            margin: 2rem auto;
+            max-width: 700px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .form-control {
+            border-radius: 12px;
+            padding: 0.75rem 1.25rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(42, 79, 110, 0.25);
+        }
+
+        .btn-primary {
+            background: var(--gradient-blue);
+            color: white !important;
+            padding: 0.75rem 2rem;
+            border-radius: 12px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 79, 110, 0.3);
+        }
+
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: start;
+            gap: 0.5rem;
+        }
+
+        .star-rating input[type="radio"] {
+            display: none;
+        }
+
+        .star-rating label {
+            font-size: 2rem;
+            color: lightgray;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star-rating input[type="radio"]:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: gold;
+        }
+
+        .text-danger {
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+<main class="container py-5">
+    <div class="review-form-card">
+        <h2 class="mb-4 text-center">
+            <i class="fas fa-star-half-alt me-2"></i>
+            Залишити відгук
+        </h2>
+
+        <form th:action="@{/web/ukr-lit-exchange/feedback/save}" th:object="${review}" method="post">
+            <!-- Rating -->
+            <div class="mb-4">
+                <label for="rating" class="form-label">
+                    <i class="fas fa-star"></i>
+                    Оцінка
+                </label>
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5" th:field="*{rating}" />
+                    <label for="star5">&#9733;</label>
+
+                    <input type="radio" id="star4" name="rating" value="4" th:field="*{rating}" />
+                    <label for="star4">&#9733;</label>
+
+                    <input type="radio" id="star3" name="rating" value="3" th:field="*{rating}" />
+                    <label for="star3">&#9733;</label>
+
+                    <input type="radio" id="star2" name="rating" value="2" th:field="*{rating}" />
+                    <label for="star2">&#9733;</label>
+
+                    <input type="radio" id="star1" name="rating" value="1" th:field="*{rating}" />
+                    <label for="star1">&#9733;</label>
+                </div>
+                <div class="text-danger" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}">Помилка</div>
+            </div>
+
+            <!-- Comment -->
+            <div class="mb-4">
+                <label for="comment" class="form-label">
+                    <i class="fas fa-comment-dots"></i>
+                    Коментар
+                </label>
+                <textarea th:field="*{comment}" class="form-control" rows="4" maxlength="300" placeholder="Поділіться своїм враженням..." required></textarea>
+                <div class="text-danger" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">Помилка</div>
+            </div>
+
+            <!-- Hidden Fields -->
+            <input type="hidden" th:field="*{user.id}" />
+            <input type="hidden" th:field="*{reviewer.id}" />
+
+            <!-- Submit -->
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane me-2"></i>
+                    Зберегти відгук
+                </button>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

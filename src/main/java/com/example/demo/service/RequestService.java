@@ -64,21 +64,21 @@ public class RequestService implements CrudService<RequestDTO, Long>{
     }
 
     public List<RequestDTO> getСompletedOrders(Long userId) {
-        return requestRepository.findByRequestStatusAndUserInvolved(RequestStatus.PRE_COMPLETED, userId)
+        return requestRepository.findByRequestStatusAndUserInvolved(List.of(RequestStatus.PRE_COMPLETED, RequestStatus.COMPLETED), userId)
                 .stream()
                 .map(requestMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     public List<RequestDTO> getPendingOrders(Long userId) {
-        return requestRepository.findByRequestStatusAndUserInvolved(RequestStatus.PENDING, userId)
+        return requestRepository.findByRequestStatusAndUserInvolved(List.of(RequestStatus.PENDING), userId)
                 .stream()
                 .map(requestMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     public List<RequestDTO> getAcceptedOrders(Long userId) {
-        return requestRepository.findByRequestStatusAndUserInvolved(RequestStatus.ACCEPTED, userId)
+        return requestRepository.findByRequestStatusAndUserInvolved(List.of(RequestStatus.ACCEPTED), userId)
                 .stream()
                 .map(requestMapper::toDTO)
                 .collect(Collectors.toList());

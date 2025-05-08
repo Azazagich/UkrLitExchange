@@ -195,49 +195,58 @@
     <!-- Вкладки -->
     <ul class="nav nav-pills mb-4" id="tabs" role="tablist">
         <li class="nav-item">
-            <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#all" type="button">
-                Усі запити
-            </button>
+            <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#all" type="button">Усі запити</button>
         </li>
         <li class="nav-item">
-            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#mine" type="button">
-                Мої запити
-            </button>
+            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#mine" type="button">Мої запити</button>
         </li>
     </ul>
 
     <div class="tab-content">
         <!-- Усі запити -->
         <div class="tab-pane fade show active" id="all">
+            <form th:action="@{/web/ukr-lit-exchange/dashboard}" method="get" class="mb-4 search-form">
+                <div class="row g-2">
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" placeholder="Назва або автор" name="query" th:value="${query}">
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" name="type">
+                            <option value="">Всі типи</option>
+                            <option value="EXCHANGE" th:selected="${selectedType == 'EXCHANGE'}">Обмін</option>
+                            <option value="DONATION" th:selected="${selectedType == 'DONATION'}">Дарування</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary w-100" type="submit">Пошук</button>
+                    </div>
+                </div>
+            </form>
+
             <div class="row g-4">
                 <div class="col-md-6 col-lg-4" th:each="request : ${requestAllBooks}">
-                    <div class="card">
+                    <div class="card h-100">
                         <img th:src="${request.senderBook.photoBookUrl}" class="card-img-top" alt="Фото книги">
-                        <div class="card-body">
+                        <div class="card-body d-flex flex-column">
                             <h5 class="card-title" th:text="${request.senderBook.title}">Назва книги</h5>
-                            <p class="card-text" th:text="${request.senderBook.author}">Автор книги</p>
-                            <p class="card-text"><strong>Мова:</strong> <span th:text="${request.senderBook.language}"></span></p>
-                            <p class="card-text"><strong>Жанр:</strong> <span th:text="${request.senderBook.genre}"></span></p>
-                            <p class="card-text"><strong>Опис книги:</strong> <span th:text="${request.senderBook.description}"></span></p>
-                            <div>
-                                <p class="card-text"><strong>Опис запиту:</strong> <span th:text="${request.description}"></span></p>
-                                <p class="card-text"><strong>Статус:</strong> <span th:text="${request.status}"></span></p>
-                            </div>
-                            <div>
-                                <p class="card-text"><strong>Нікнейм:</strong> <span th:text="${request.user.username}"></span></p>
-                                <p class="card-text"><strong>Локація:</strong> <span th:text="${request.user.location}"></span></p>
-                            </div>
-                            <div class="mt-3 d-flex gap-2">
+                            <p class="card-text" th:text="${request.senderBook.author}">Автор</p>
+                            <p><strong>Мова:</strong> <span th:text="${request.senderBook.language}"></span></p>
+                            <p><strong>Жанр:</strong> <span th:text="${request.senderBook.genre}"></span></p>
+                            <p><strong>Опис книги:</strong> <span th:text="${request.senderBook.description}"></span></p>
+                            <p><strong>Опис запиту:</strong> <span th:text="${request.description}"></span></p>
+                            <p><strong>Статус:</strong> <span th:text="${request.status}"></span></p>
+                            <p><strong>Нікнейм:</strong> <span th:text="${request.user.username}"></span></p>
+                            <p><strong>Локація:</strong> <span th:text="${request.user.location}"></span></p>
+                            <div class="mt-auto d-flex gap-2">
                                 <a th:if="${request.status.name() == 'EXCHANGE'}"
                                    th:href="@{'/web/ukr-lit-exchange/request/create/exchange-request/' + ${request.id}}"
                                    class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-exchange-alt me-1"></i>
+                                    <i class="fas fa-exchange-alt me-1"></i> Обміняти
                                 </a>
-
                                 <a th:if="${request.status.name() == 'DONATION'}"
                                    th:href="@{'/web/ukr-lit-exchange/request/create/donation-request/' + ${request.id}}"
                                    class="btn btn-sm btn-outline-success">
-                                    <i class="fas fa-gift me-1"></i>
+                                    <i class="fas fa-gift me-1"></i> Отримати
                                 </a>
                             </div>
                         </div>
@@ -245,7 +254,7 @@
                 </div>
             </div>
 
-            <!-- Пагінація для Усі запити -->
+            <!-- Пагінація для усіх запитів -->
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center mt-4">
                     <li class="page-item" th:classappend="${currentUsersRequestPage == 0} ? ' disabled' : ''">
@@ -255,8 +264,7 @@
                             <span aria-hidden="true">&laquo; Попередня</span>
                         </a>
                     </li>
-                    <li class="page-item"
-                        th:each="i : ${#numbers.sequence(0, totalUsersRequestPages - 1)}"
+                    <li class="page-item" th:each="i : ${#numbers.sequence(0, totalUsersRequestPages - 1)}"
                         th:classappend="${i == currentUsersRequestPage} ? ' active' : ''">
                         <a class="page-link"
                            th:href="@{/web/ukr-lit-exchange/dashboard(page=${i}, limit=9)}"
@@ -277,27 +285,25 @@
         <div class="tab-pane fade" id="mine">
             <div class="row g-4">
                 <div class="col-md-6 col-lg-4" th:each="request : ${requestMyBooks}">
-                    <div class="card">
+                    <div class="card h-100">
                         <img th:src="${request.senderBook.photoBookUrl}" class="card-img-top" alt="Фото книги">
-                        <div class="card-body">
+                        <div class="card-body d-flex flex-column">
                             <h5 class="card-title" th:text="${request.senderBook.title}">Назва книги</h5>
-                            <p class="card-text" th:text="${request.senderBook.author}">Автор книги</p>
-                            <p class="card-text"><strong>Мова:</strong> <span th:text="${request.senderBook.language}"></span></p>
-                            <p class="card-text"><strong>Жанр:</strong> <span th:text="${request.senderBook.genre}"></span></p>
-                            <p class="card-text"><strong>Статус:</strong> <span th:text="${request.status}"></span></p>
-                            <p class="card-text"><strong>Опис:</strong> <span th:text="${request.description}"></span></p>
-                            <div>
-                                <p class="card-text"><strong>Нікнейм:</strong> <span th:text="${request.user.username}"></span></p>
-                                <p class="card-text"><strong>Локація:</strong> <span th:text="${request.user.location}"></span></p>
-                            </div>
-                            <div class="d-flex justify-content-between mt-3">
+                            <p class="card-text" th:text="${request.senderBook.author}">Автор</p>
+                            <p><strong>Мова:</strong> <span th:text="${request.senderBook.language}"></span></p>
+                            <p><strong>Жанр:</strong> <span th:text="${request.senderBook.genre}"></span></p>
+                            <p><strong>Статус:</strong> <span th:text="${request.status}"></span></p>
+                            <p><strong>Опис:</strong> <span th:text="${request.description}"></span></p>
+                            <p><strong>Нікнейм:</strong> <span th:text="${request.user.username}"></span></p>
+                            <p><strong>Локація:</strong> <span th:text="${request.user.location}"></span></p>
+                            <div class="mt-auto d-flex justify-content-between mt-3">
                                 <a th:href="@{'/web/ukr-lit-exchange/dashboard/edit/' + ${request.id}}"
                                    class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-edit"></i> Редагувати
                                 </a>
                                 <form th:action="@{'/web/ukr-lit-exchange/dashboard/perform_delete/' + ${request.id}}" method="post">
                                     <button type="submit" class="btn btn-sm btn-outline-danger">
-                                        <i class="fas fa-trash"></i>
+                                        <i class="fas fa-trash"></i> Видалити
                                     </button>
                                 </form>
                             </div>
@@ -306,7 +312,7 @@
                 </div>
             </div>
 
-            <!-- Пагінація для Мої запити -->
+            <!-- Пагінація для моїх запитів -->
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center mt-4">
                     <li class="page-item" th:classappend="${currentMyBooksPage == 0} ? ' disabled' : ''">
@@ -316,8 +322,7 @@
                             <span aria-hidden="true">&laquo; Попередня</span>
                         </a>
                     </li>
-                    <li class="page-item"
-                        th:each="i : ${#numbers.sequence(0, totalMyBooksPages - 1)}"
+                    <li class="page-item" th:each="i : ${#numbers.sequence(0, totalMyBooksPages - 1)}"
                         th:classappend="${i == currentMyBooksPage} ? ' active' : ''">
                         <a class="page-link"
                            th:href="@{/web/ukr-lit-exchange/dashboard(page=${i}, limit=9)}"
@@ -335,6 +340,7 @@
         </div>
     </div>
 </main>
+
 
 <footer th:replace="~{fragments/footer.html :: footer}"></footer>
 </body>

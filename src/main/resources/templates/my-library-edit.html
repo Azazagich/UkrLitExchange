@@ -162,7 +162,7 @@
                 </label>
                 <select class="form-select" th:field="*{condition}">
                     <option th:each="cond : ${condition}"
-                            th:value="${cond}" th:text="${condStat.current.getCondition()}">
+                            th:value="${cond}" th:text="${cond}">
                     </option>
                 </select>
             </div>
