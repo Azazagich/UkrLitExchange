@@ -46,5 +46,7 @@ public class BookDTO implements Serializable {
 
     private String photoBookUrl;
 
+    private Boolean deleted;
+
     private UserDTO owner;
 }

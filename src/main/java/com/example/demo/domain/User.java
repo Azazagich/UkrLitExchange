@@ -61,10 +61,6 @@ public class User extends AbstractAuditingEntity implements UserDetails {
     private Set<Book> books;
 
     @EqualsAndHashCode.Exclude
-    @ManyToMany(mappedBy = "participants")
-    private Set<Group> groups;
-
-    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "reviewer")
     private Set<Review> givenReviews;
 

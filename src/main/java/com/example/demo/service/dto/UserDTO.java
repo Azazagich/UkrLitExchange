@@ -42,6 +42,4 @@ public class UserDTO implements Serializable {
     private String avatarUrl;
 
     private Set<BookDTO> books;
-
-    private Set<GroupDTO> groups;
 }

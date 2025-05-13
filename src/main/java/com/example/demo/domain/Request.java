@@ -37,10 +37,10 @@ public class Request extends AbstractAuditingEntity{
     @Column
     private Boolean senderCompleted;
 
-    @OneToOne
+    @ManyToOne
     private Book senderBook;
 
-    @OneToOne
+    @ManyToOne
     private Book receiverBook;
 
     @ManyToOne

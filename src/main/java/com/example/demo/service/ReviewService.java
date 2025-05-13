@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.Book;
 import com.example.demo.domain.Review;
 import com.example.demo.repository.ReviewRepository;
 import com.example.demo.service.dto.ReviewDTO;
@@ -21,6 +20,17 @@ public class ReviewService implements CrudService<ReviewDTO, Long>{
     private final ReviewRepository reviewRepository;
     private final ReviewMapper reviewMapper;
 
+
+    public List<ReviewDTO> getReviewsByUserId(Long userId) {
+        log.debug("Fetching reviews by userId: {}", userId);
+        var reviews = reviewRepository.findReviewsByUserId(userId);
+        return reviewMapper.toDTO(reviews);
+    }
+
+    public boolean alreadyReviewed(Long senderId, Long receiverId) {
+        log.debug("Checking if review exists from sender {} to receiver {}", senderId, receiverId);
+        return reviewRepository.existsByUserIdAndReviewerId(senderId, receiverId);
+    }
 
     @Override
     public ReviewDTO getById(Long id) {

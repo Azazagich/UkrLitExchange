@@ -96,6 +96,18 @@
                       placeholder="Чому ви хочете цю книгу"
                       required rows="5"></textarea>
 
+            <!-- Вибір способу доставки -->
+            <label for="deliveryMethod" class="form-label mt-4">Спосіб доставки</label>
+            <select class="form-select"
+                    th:field="*{deliveryMethod}"
+                    id="deliveryMethod"
+                    required>
+                <option th:each="method : ${deliveryMethod}"
+                        th:value="${method}"
+                        th:text="${method.deliveryMethod}">
+                </option>
+            </select>
+
             <!-- Приховане поле з dashboardDTO.id -->
             <input type="hidden" th:field="*{dashboard.id}" />
 

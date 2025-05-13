@@ -1,12 +1,9 @@
 package com.example.demo.controller.web;
 
 
-import com.example.demo.domain.User;
+import com.example.demo.domain.enumeration.DeliveryMethod;
 import com.example.demo.domain.enumeration.RequestStatus;
-import com.example.demo.service.BookService;
-import com.example.demo.service.RequestService;
-import com.example.demo.service.DashboardService;
-import com.example.demo.service.UserService;
+import com.example.demo.service.*;
 import com.example.demo.service.dto.RequestDTO;
 import com.example.demo.service.dto.DashboardDTO;
 import com.example.demo.service.dto.UserDTO;
@@ -18,7 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @Controller
 @RequestMapping("/web/ukr-lit-exchange/request")
@@ -30,10 +30,15 @@ public class RequestWebController {
     private final UserService userService;
     private final DashboardService dashboardService;
     private final RequestService requestService;
+    private final ReviewService reviewService;
 
     @GetMapping
     public String requestPage(@AuthenticationPrincipal UserDetails userDetails, Model model){
         UserDTO user = userService.getByUsername(userDetails.getUsername());
+
+
+//        boolean alreadyReviewed = reviewService.alreadyReviewed(user.getId(), requestService.ge);
+
 
         model.addAttribute("pendingOrders", requestService.getPendingOrders(user.getId()));
         model.addAttribute("acceptedOrders", requestService.getAcceptedOrders(user.getId()));
@@ -43,7 +48,6 @@ public class RequestWebController {
 
         return "request-page";
     }
-
 
     @PostMapping("/accept")
     public String acceptRequest(@RequestParam Long requestId) {
@@ -82,6 +86,7 @@ public class RequestWebController {
         RequestDTO dto = new RequestDTO();
         dto.setDashboard(board);
         model.addAttribute("requestDTO", dto);
+        model.addAttribute("deliveryMethod", DeliveryMethod.values());
         model.addAttribute("userBooks", bookService.getBooksByOwnerId(sender.getId()));
         return "dashboard-request-exchange";
     }
@@ -104,8 +109,6 @@ public class RequestWebController {
         return "redirect:/web/ukr-lit-exchange/request";
     }
 
-
-
     @GetMapping("/create/donation-request/{requestBoardId}")
     public String showRequestDonationForm(
             @PathVariable Long requestBoardId,
@@ -116,6 +119,7 @@ public class RequestWebController {
         RequestDTO requestDTO = new RequestDTO();
         requestDTO.setDashboard(requestBoard);
 
+        model.addAttribute("deliveryMethod", DeliveryMethod.values());
         model.addAttribute("requestDTO", requestDTO);
         return "dashboard-request-donation";
     }
@@ -138,7 +142,4 @@ public class RequestWebController {
 
         return "redirect:/web/ukr-lit-exchange/request";
     }
-
-
-
 }

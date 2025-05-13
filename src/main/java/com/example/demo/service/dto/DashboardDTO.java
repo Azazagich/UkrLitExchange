@@ -27,4 +27,6 @@ public class DashboardDTO implements Serializable {
 
     @NotNull(message = "Book cannot be empty")
     private BookDTO senderBook;
+
+    private Boolean deleted;
 }

@@ -36,4 +36,6 @@ public class RequestDTO implements Serializable {
     private RequestStatus requestStatus;
 
     private DashboardDTO dashboard;
+
+    private Boolean deleted;
 }

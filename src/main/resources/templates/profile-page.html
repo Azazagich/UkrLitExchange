@@ -64,6 +64,72 @@
                     </ul>
                 </section>
 
+                <!-- Exchange Statistics -->
+                <section class="profile-exchange-stats mt-4">
+                    <h3>
+                        <i class="fas fa-exchange-alt"></i>
+                        Exchange Statistics
+                    </h3>
+                    <ul class="exchange-stats-list">
+                        <li>
+                            <i class="fas fa-paper-plane me-2"></i>
+                            Sent Requests:
+                            <strong th:text="${sendRequests}">0</strong>
+                        </li>
+                        <li>
+                            <i class="fas fa-tasks me-2"></i>
+                            All Participated Requests:
+                            <strong th:text="${allRequests}">0</strong>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle me-2"></i>
+                            Completed Exchanges:
+                            <strong th:text="${completedExchange}">0</strong>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- User Reviews -->
+                <section class="profile-reviews">
+                    <h3>
+                        <i class="fas fa-comments"></i>
+                        User Reviews
+                    </h3>
+
+                    <div th:if="${#lists.isEmpty(reviews)}">
+                        <p class="text-muted">No reviews yet.</p>
+                    </div>
+
+                    <div th:unless="${#lists.isEmpty(reviews)}"
+                         class="d-flex overflow-auto gap-3 py-3"
+                         style="scroll-snap-type: x mandatory;">
+
+                        <div th:each="review : ${reviews}"
+                             class="review-item card flex-shrink-0 p-3"
+                             style="width: 300px; scroll-snap-align: start;">
+
+                            <div class="d-flex justify-content-between mb-2">
+                                <div class="rating-stars">
+                                    <span th:each="i : ${#numbers.sequence(1, 5)}"
+                                          class="star"
+                                          th:classappend="${i <= review.rating} ? 'fas fa-star' : 'far fa-star'"></span>
+                                </div>
+                            </div>
+
+                            <div class="comment">
+                                <strong>Comment</strong>
+                                <p th:text="${review.comment}"></p>
+                            </div>
+
+                            <div class="review-meta">
+                                <small class="text-muted">
+                                    Reviewed by: <span th:text="${review.reviewer.username}">Reviewer</span>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Edit Button -->
                 <div class="profile-actions">
                     <a th:href="@{/web/ukr-lit-exchange/profile/edit}"

@@ -18,6 +18,16 @@
             --light-gray: #f8f9fa;
         }
 
+        .library-title {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--dark-blue);
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            position: relative;
+        }
+
         .library-main {
             padding: 2rem 1.5rem 100px;
             max-width: 1200px;
@@ -80,8 +90,8 @@
         }
 
         .book-image-wrapper {
-            width: 200px;
-            height: 200px;
+            width: 350px;
+            height: 400px;
             margin: 10px auto;
             overflow: hidden;
             border-radius: 10px;
@@ -215,7 +225,7 @@
 <header th:replace="~{fragments/header.html :: header}"></header>
 
 <main class="library-main">
-    <h2 class="mb-4">Моя Бібліотека</h2>
+    <h2 class="library-title">Моя Бібліотека</h2>
 
     <form th:action="@{/web/ukr-lit-exchange/my-library}" method="get" class="mb-4 search-form">
         <div class="input-group">
@@ -231,7 +241,7 @@
             <div class="book-card">
 
                 <div class="book-image-wrapper">
-                    <img th:src="${book.photoBookUrl}" alt="Book Photo" class="book-image" >
+                    <img th:src="${book.photoBookUrl}" alt="Book Photo" class="book-image">
                 </div>
                 <div class="book-body">
                     <h3 class="book-title" th:text="${book.title}"></h3>
@@ -274,36 +284,38 @@
         </div>
     </div>
 
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <!-- Попередня сторінка -->
-            <li class="page-item" th:classappend="${currentPage == 0} ? ' disabled' : ''">
-                <a class="page-link"
-                   th:href="@{/web/ukr-lit-exchange/my-library(page=${currentPage - 1}, limit=9)}"
-                   aria-label="Попередня">
-                    <span aria-hidden="true">&laquo; Попередня</span>
-                </a>
-            </li>
+    <div th:if="${userBooks != null and !userBooks.isEmpty()}">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <!-- Попередня сторінка -->
+                <li class="page-item" th:classappend="${currentPage == 0} ? ' disabled' : ''">
+                    <a class="page-link"
+                       th:href="@{/web/ukr-lit-exchange/my-library(page=${currentPage - 1}, limit=9)}"
+                       aria-label="Попередня">
+                        <span aria-hidden="true">&laquo; Попередня</span>
+                    </a>
+                </li>
 
-            <!-- Перелік сторінок -->
-            <li class="page-item"
-                th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
-                th:classappend="${i == currentPage} ? ' active' : ''">
-                <a class="page-link"
-                   th:href="@{/web/ukr-lit-exchange/my-library(page=${i}, limit=9)}"
-                   th:text="${i + 1}"></a>
-            </li>
+                <!-- Перелік сторінок -->
+                <li class="page-item"
+                    th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                    th:classappend="${i == currentPage} ? ' active' : ''">
+                    <a class="page-link"
+                       th:href="@{/web/ukr-lit-exchange/my-library(page=${i}, limit=9)}"
+                       th:text="${i + 1}"></a>
+                </li>
 
-            <!-- Наступна сторінка -->
-            <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? ' disabled' : ''">
-                <a class="page-link"
-                   th:href="@{/web/ukr-lit-exchange/my-library(page=${currentPage + 1}, limit=9)}"
-                   aria-label="Наступна">
-                    <span aria-hidden="true">Наступна &raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+                <!-- Наступна сторінка -->
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? ' disabled' : ''">
+                    <a class="page-link"
+                       th:href="@{/web/ukr-lit-exchange/my-library(page=${currentPage + 1}, limit=9)}"
+                       aria-label="Наступна">
+                        <span aria-hidden="true">Наступна &raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 
 
     <a th:href="@{/web/ukr-lit-exchange/my-library/save}"

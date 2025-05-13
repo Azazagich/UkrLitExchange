@@ -28,7 +28,6 @@ public class ReviewWenController {
     @GetMapping("/new")
     public String showReviewForm(@RequestParam Long requestId, @AuthenticationPrincipal UserDetails userDetails, Model model) {
         UserDTO currentUser = userService.getByUsername(userDetails.getUsername());
-
         RequestDTO request = requestService.getById(requestId);
 
         UserDTO reviewer = currentUser;
@@ -47,8 +46,16 @@ public class ReviewWenController {
 
     @PostMapping("/save")
     public String saveReview(@ModelAttribute("review") @Valid ReviewDTO reviewDTO,
-                             BindingResult bindingResult) {
+                             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            return "review-form";
+        }
+
+        Long senderId = reviewDTO.getReviewer().getId();
+        Long receiverId = reviewDTO.getUser().getId();
+
+        if (reviewService.alreadyReviewed(senderId, receiverId)) {
+            model.addAttribute("errorMessage", "Ви вже залишили відгук про цього користувача.");
             return "review-form";
         }
 

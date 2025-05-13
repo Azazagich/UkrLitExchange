@@ -14,4 +14,7 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     @Query("SELECT request FROM Request request WHERE (request.sender.id = :userId OR request.receiver.id = :userId) AND request.requestStatus IN :status")
     List<Request> findByRequestStatusAndUserInvolved(@Param("status") List<RequestStatus> status, @Param("userId") Long userId);
+
+    @Query("SELECT request FROM Request request WHERE (request.sender.id = :userId OR request.receiver.id = :userId)")
+    List<Request> findAllByUserId(@Param("userId") Long userId);
 }

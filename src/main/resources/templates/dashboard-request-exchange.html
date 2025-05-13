@@ -110,6 +110,20 @@
                           rows="4" required></textarea>
             </div>
 
+            <div class="mb-3">
+                <label for="deliveryMethod" class="form-label">Спосіб доставки</label>
+                <select class="form-select"
+                        th:field="*{deliveryMethod}"
+                        id="deliveryMethod"
+                        required>
+                    <option value="">-- Виберіть спосіб --</option>
+                    <option th:each="method : ${deliveryMethod}"
+                            th:value="${method}"
+                            th:text="${method.deliveryMethod}">
+                    </option>
+                </select>
+            </div>
+
             <input type="hidden" th:field="*{dashboard.id}" />
 
             <div class="d-flex justify-content-end gap-3">

@@ -24,14 +24,6 @@ public class RequestService implements CrudService<RequestDTO, Long>{
     private final RequestRepository requestRepository;
     private final RequestMapper requestMapper;
 
-//
-//    public List<OrderDTO> getAllOrdersByUser(Long userId) {
-//        return orderRepository.findAllOrdersBySenderId(userId)
-//                .stream()
-//                .map(orderMapper::toDTO)
-//                .collect(Collectors.toList());
-//    }
-
 
     public void acceptRequest(Long requestId) {
         RequestDTO request = getById(requestId);
@@ -42,6 +34,7 @@ public class RequestService implements CrudService<RequestDTO, Long>{
     public void declineRequest(Long requestId) {
         RequestDTO request = getById(requestId);
         request.setRequestStatus(RequestStatus.DECLINE);
+        request.getDashboard().setDeleted(true);
         update(requestId, request);
     }
 
@@ -86,6 +79,13 @@ public class RequestService implements CrudService<RequestDTO, Long>{
 
     public List<RequestDTO> getSentOrders(Long userId) {
         return requestRepository.findAllOrdersBySenderId(userId)
+                .stream()
+                .map(requestMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<RequestDTO> getAllUserOrders(Long userId) {
+        return requestRepository.findAllByUserId(userId)
                 .stream()
                 .map(requestMapper::toDTO)
                 .collect(Collectors.toList());
