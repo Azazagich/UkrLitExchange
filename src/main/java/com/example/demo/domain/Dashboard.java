@@ -3,12 +3,13 @@ package com.example.demo.domain;
 import com.example.demo.domain.enumeration.ExchangeMethod;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table
 public class Dashboard extends AbstractAuditingEntity{
 

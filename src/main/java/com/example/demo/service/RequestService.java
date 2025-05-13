@@ -28,13 +28,13 @@ public class RequestService implements CrudService<RequestDTO, Long>{
     public void acceptRequest(Long requestId) {
         RequestDTO request = getById(requestId);
         request.setRequestStatus(RequestStatus.ACCEPTED);
+        request.getDashboard().setDeleted(true);
         update(requestId, request);
     }
 
     public void declineRequest(Long requestId) {
         RequestDTO request = getById(requestId);
         request.setRequestStatus(RequestStatus.DECLINE);
-        request.getDashboard().setDeleted(true);
         update(requestId, request);
     }
 

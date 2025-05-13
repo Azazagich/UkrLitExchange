@@ -41,7 +41,7 @@ public class BookRepositoryTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws Exception {
         bookService.deleteById(1L);
     }
 

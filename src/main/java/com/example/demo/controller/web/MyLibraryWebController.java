@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/web/ukr-lit-exchange/my-library")
@@ -98,8 +99,13 @@ public class MyLibraryWebController {
     }
 
     @PostMapping("/perform_delete/{bookId}")
-    public String deleteBook(@PathVariable("bookId") Long id){
-        bookService.deleteById(id);
+    public String deleteBook(@PathVariable("bookId") Long id, RedirectAttributes redirectAttributes){
+        try {
+            bookService.deleteById(id);
+            redirectAttributes.addFlashAttribute("success", "Book deleted successfully.");
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("error", "This book is part of an active exchange and cannot be deleted.");
+        }
         return "redirect:/web/ukr-lit-exchange/my-library";
     }
 

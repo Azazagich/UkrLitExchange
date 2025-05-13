@@ -3,13 +3,14 @@ package com.example.demo.domain;
 import com.example.demo.domain.enumeration.BookCondition;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = "book")
 public class Book extends AbstractAuditingEntity{
 

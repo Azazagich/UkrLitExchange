@@ -15,10 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 
 @Controller
 @RequestMapping("/web/ukr-lit-exchange/request")
@@ -30,15 +26,10 @@ public class RequestWebController {
     private final UserService userService;
     private final DashboardService dashboardService;
     private final RequestService requestService;
-    private final ReviewService reviewService;
 
     @GetMapping
     public String requestPage(@AuthenticationPrincipal UserDetails userDetails, Model model){
         UserDTO user = userService.getByUsername(userDetails.getUsername());
-
-
-//        boolean alreadyReviewed = reviewService.alreadyReviewed(user.getId(), requestService.ge);
-
 
         model.addAttribute("pendingOrders", requestService.getPendingOrders(user.getId()));
         model.addAttribute("acceptedOrders", requestService.getAcceptedOrders(user.getId()));

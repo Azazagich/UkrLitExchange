@@ -14,5 +14,5 @@ public interface CrudService <DTO, ID extends Long>{
 
     DTO update(ID id, DTO dto);
 
-    void deleteById(ID id);
+    void deleteById(ID id) throws Exception;
 }

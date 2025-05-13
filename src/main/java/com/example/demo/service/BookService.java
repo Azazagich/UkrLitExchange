@@ -124,14 +124,19 @@ public class BookService implements CrudService<BookDTO, Long>{
 
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws Exception {
         log.debug("Deleting book with id: {}", id);
 
         if (!bookRepository.existsById(id)) {
             throw new RuntimeException("Book not found with id: " + id);
         }
 
-        bookRepository.deleteById(id);
+        try {
+            bookRepository.deleteById(id);
+        } catch (Exception ex){
+            throw new Exception("This book is part of an active exchange and cannot be deleted.");
+        }
+
         log.info("Successfully deleted book with id: {}", id);
     }
 }

@@ -48,7 +48,7 @@ public class BookRestController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById (@PathVariable Long id){
+    public void deleteById (@PathVariable Long id) throws Exception {
         bookService.deleteById(id);
     }
 }
