@@ -1,6 +1,8 @@
 package com.example.demo.domain;
 
 import com.example.demo.domain.enumeration.BookCondition;
+import com.example.demo.domain.enumeration.Genre;
+import com.example.demo.domain.enumeration.Language;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,11 +26,13 @@ public class Book extends AbstractAuditingEntity{
     @Column(nullable = false, length = 50)
     private String author;
 
-    @Column(nullable = false, length = 50)
-    private String genre;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Genre genre;
 
-    @Column(nullable = false, length = 50)
-    private String language;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Language language;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -102,7 +102,7 @@
                     th:field="*{deliveryMethod}"
                     id="deliveryMethod"
                     required>
-                <option th:each="method : ${deliveryMethod}"
+                <option th:each="method : ${deliveryMethodAll}"
                         th:value="${method}"
                         th:text="${method.deliveryMethod}">
                 </option>

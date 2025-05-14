@@ -1,6 +1,8 @@
 package com.example.demo.controller.web;
 
 import com.example.demo.domain.enumeration.ExchangeMethod;
+import com.example.demo.domain.enumeration.Genre;
+import com.example.demo.domain.enumeration.Language;
 import com.example.demo.service.BookService;
 import com.example.demo.service.DashboardService;
 import com.example.demo.service.UserService;
@@ -30,6 +32,8 @@ public class DashboardWebController {
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestParam(value = "query", required = false) String searchQuery,
             @RequestParam(value = "type", required = false) ExchangeMethod selectedType,
+            @RequestParam(value = "genre", required = false) Genre selectedGenre,
+            @RequestParam(value = "language", required = false) Language selectedLanguage,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "9") int limit,
             Model model
@@ -39,15 +43,21 @@ public class DashboardWebController {
         Page<DashboardDTO> dashboardMyRequest = dashboardService.getRequestBookByOwnerId(userId, page, limit);
         Page<DashboardDTO> dashboardRequest;
 
-        if ((searchQuery != null && !searchQuery.isBlank()) || selectedType != null) {
+        if ((searchQuery != null && !searchQuery.isBlank()) || selectedType != null
+                || selectedLanguage != null || selectedGenre != null) {
             dashboardRequest = dashboardService.getRequestDashboardsExceptOwnerIdByFilter(
-                    userId, searchQuery, selectedType, page, limit);
+                    userId, searchQuery, selectedType, selectedGenre, selectedLanguage, page, limit);
         } else {
             dashboardRequest = dashboardService.getRequestDashboardsExceptOwnerId(userId, page, limit);
         }
 
         model.addAttribute("query", searchQuery);
         model.addAttribute("selectedType", selectedType != null ? selectedType.name() : "");
+        model.addAttribute("selectedGenre", selectedGenre != null ? selectedGenre.name() : "");
+        model.addAttribute("selectedLanguage", selectedLanguage != null ? selectedLanguage.name() : "");
+
+        model.addAttribute("genre", Genre.values());
+        model.addAttribute("language", Language.values());
 
         model.addAttribute("requestAllBooks", dashboardRequest.getContent());
         model.addAttribute("totalUsersRequestPages", dashboardRequest.getTotalPages());

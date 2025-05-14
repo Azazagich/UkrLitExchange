@@ -143,6 +143,11 @@
             <input type="hidden" th:field="*{user.id}" />
             <input type="hidden" th:field="*{reviewer.id}" />
 
+            <!-- Скасувати -->
+            <a th:href="@{/web/ukr-lit-exchange/dashboard}" class="btn btn-outline-secondary">
+                <i class="fas fa-times me-2"></i> Скасувати
+            </a>
+
             <!-- Submit -->
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary">

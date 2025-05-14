@@ -263,10 +263,13 @@
                             <!-- Книга користувача (отримувача) -->
                             <div class="mb-3 border p-2 rounded bg-light">
                                 <h6 class="text-primary">Ваша книга:</h6>
-                                <img th:src="${request.receiverBook.photoBookUrl}" class="img-fluid mb-2 rounded" alt="Фото книги" style="max-height: 180px;" />
+                                <img th:if="${request.receiverBook.photoBookUrl != null}"
+                                     th:src="${request.receiverBook.photoBookUrl}"
+                                     class="img-fluid mb-2 rounded" alt="Фото книги" style="max-height: 180px;" />
                                 <p class="mb-1"><strong>Назва:</strong> <span th:text="${request.receiverBook.title}">назва</span></p>
                                 <p class="mb-1"><strong>Автор:</strong> <span th:text="${request.receiverBook.author}">автор</span></p>
-                                <p class="mb-1"><strong>Стан:</strong> <span th:text="${request.receiverBook.condition}">стан</span></p>
+                                <p class="mb-1"><strong>Мова:</strong> <span th:text="${request.receiverBook.language.displayName}">назва</span></p>
+                                <p class="mb-1"><strong>Стан:</strong> <span th:text="${request.receiverBook.condition.displayName}">стан</span></p>
                             </div>
 
                             <!-- Книга відправника -->
@@ -278,13 +281,14 @@
                                      class="img-fluid mb-2 rounded" alt="Фото книги" style="max-height: 180px;" />
                                 <p class="mb-1"><strong>Назва:</strong> <span th:text="${request.senderBook.title}">назва</span></p>
                                 <p class="mb-1"><strong>Автор:</strong> <span th:text="${request.senderBook.author}">автор</span></p>
-                                <p class="mb-1"><strong>Стан:</strong> <span th:text="${request.senderBook.condition}">стан</span></p>
+                                <p class="mb-1"><strong>Мова:</strong> <span th:text="${request.senderBook.language.displayName}">автор</span></p>
+                                <p class="mb-1"><strong>Стан:</strong> <span th:text="${request.senderBook.condition.displayName}">стан</span></p>
                             </div>
 
                             <!-- Повідомлення та параметри -->
                             <p class="mt-3"><strong>Повідомлення:</strong> <span th:text="${request.message}">повідомлення</span></p>
-                            <p><strong>Метод доставки:</strong> <span class="badge bg-info text-dark" th:text="${request.deliveryMethod}">доставка</span></p>
-                            <p><strong>Тип обміну:</strong> <span class="badge bg-secondary" th:text="${request.dashboard.status}">тип</span></p>
+                            <p><strong>Метод доставки:</strong> <span class="badge bg-info text-dark" th:text="${request.deliveryMethod.deliveryMethod}">доставка</span></p>
+                            <p><strong>Тип обміну:</strong> <span class="badge bg-secondary" th:text="${request.dashboard.status.exchangeMethod}">тип</span></p>
 
                             <!-- Кнопки дії -->
                             <div class="mt-4 d-flex gap-2">
@@ -314,32 +318,32 @@
                 <div class="col-md-6" th:each="request : ${acceptedOrders}" th:if="${request.receiver?.id == currentUser.id}">
                     <div class="card mb-4 shadow-sm border-success">
                         <div class="card-header bg-success text-white">
-                            <h5 class="mb-0" th:text="${request.receiverBook?.title}">Назва книги</h5>
+                            <h5 class="mb-0" th:text="${request.dashboard.status.exchangeMethod}">Назва книги</h5>
                         </div>
                         <div class="card-body">
 
                             <!-- Ви отримуєте -->
                             <div class="info-block mb-3" th:if="${request.receiverBook != null}">
-                                <h6>📚 Ви отримуєте в обмін:</h6>
+                                <h6>📦 Ви запропонували:</h6>
                                 <p><strong>Книга:</strong> <span th:text="${request.receiverBook.title}">Назва</span></p>
                                 <p><strong>Автор:</strong> <span th:text="${request.receiverBook.author}">Автор</span></p>
-                                <p><strong>Мова:</strong> <span th:text="${request.receiverBook.language}">Мова</span></p>
-                                <p><strong>Стан:</strong> <span th:text="${request.receiverBook.condition}">Стан</span></p>
+                                <p><strong>Мова:</strong> <span th:text="${request.receiverBook.language.displayName}">Мова</span></p>
+                                <p><strong>Стан:</strong> <span th:text="${request.receiverBook.condition.displayName}">Стан</span></p>
                             </div>
 
                             <!-- Ви запропонували -->
                             <div class="info-block mb-3" th:if="${request.senderBook != null}">
-                                <h6>📦 Ви запропонували:</h6>
+                                <h6>📚 Ви отримуєте в обмін:</h6>
                                 <p><strong>Книга:</strong> <span th:text="${request.senderBook.title}">Назва</span></p>
                                 <p><strong>Автор:</strong> <span th:text="${request.senderBook.author}">Автор</span></p>
-                                <p><strong>Мова:</strong> <span th:text="${request.senderBook.language}">Мова</span></p>
-                                <p><strong>Стан:</strong> <span th:text="${request.senderBook.condition}">Стан</span></p>
+                                <p><strong>Мова:</strong> <span th:text="${request.senderBook.language.displayName}">Мова</span></p>
+                                <p><strong>Стан:</strong> <span th:text="${request.senderBook.condition.displayName}">Стан</span></p>
                             </div>
 
                             <!-- Деталі -->
                             <div class="info-block mb-3">
                                 <p><strong>Повідомлення:</strong> <span th:text="${request.message}">повідомлення</span></p>
-                                <p><strong>Спосіб доставки:</strong> <span th:text="${request.deliveryMethod}">доставка</span></p>
+                                <p><strong>Спосіб доставки:</strong> <span th:text="${request.deliveryMethod.deliveryMethod}">доставка</span></p>
                                 <p><strong>Статус:</strong> <span class="badge bg-success">Прийнято</span></p>
                             </div>
 
@@ -377,7 +381,7 @@
                      th:if="${request.receiver?.id == currentUser.id}">
                     <div class="card mb-4 shadow-sm border-secondary">
                         <div class="card-header bg-secondary text-white">
-                            <h5 class="mb-0" th:text="'Обмін: ' + ${request.receiverBook?.title}">Обмін</h5>
+                            <h5 class="mb-0" th:text="${request.dashboard.status.exchangeMethod}">Обмін</h5>
                         </div>
 
                         <div class="card-body">
@@ -525,7 +529,7 @@
                                     <span th:if="${request.requestStatus.name() == 'PENDING'}" class="badge bg-warning">Очікує</span>
                                     <span th:if="${request.requestStatus.name() == 'ACCEPTED'}" class="badge bg-success">Прийнято</span>
                                     <span th:if="${request.requestStatus.name() == 'DECLINE'}" class="badge bg-danger">Відхилено</span>
-                                    <span th:if="${request.requestStatus.name() == 'PRE_COMPLETED'}" class="badge bg-secondary">Очікується відповідь від вас</span>
+                                    <span th:if="${request.requestStatus.name() == 'PRE_COMPLETED'}" class="badge bg-warning">Очікує підтвердження</span>
                                     <span th:if="${request.requestStatus.name() == 'COMPLETED'}" class="badge bg-secondary">Завершено</span>
                                 </p>
                             </div>

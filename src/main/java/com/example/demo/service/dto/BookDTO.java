@@ -1,6 +1,9 @@
 package com.example.demo.service.dto;
 
+import com.example.demo.domain.enumeration.BookCondition;
 import com.example.demo.domain.enumeration.ExchangeMethod;
+import com.example.demo.domain.enumeration.Genre;
+import com.example.demo.domain.enumeration.Language;
 import jakarta.validation.constraints.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -26,20 +29,14 @@ public class BookDTO implements Serializable {
     @Size(max = 50, message = "Author must be at most 50 characters")
     private String author;
 
-    @NotBlank(message = "Genre cannot be empty")
-    @Size(max = 50, message = "Genre must be at most 50 characters")
-    private String genre;
+    @NotNull(message = "Genre cannot be empty")
+    private Genre genre;
 
-    @NotBlank(message = "Language cannot be empty")
-    @Size(max = 50, message = "Language must be at most 50 characters")
-    private String language;
+    @NotNull(message = "Language cannot be empty")
+    private Language language;
 
-    @NotNull(message = "Book status cannot be null")
-    private ExchangeMethod bookStatus;
-
-    @NotBlank(message = "Condition cannot be empty")
-    @Size(max = 30, message = "Condition must be at most 30 characters")
-    private String condition;
+    @NotNull(message = "Condition cannot be empty")
+    private BookCondition condition;
 
     @Size(max = 300, message = "Description must be at most 300 characters")
     private String description;

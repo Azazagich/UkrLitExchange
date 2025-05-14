@@ -2,6 +2,8 @@ package com.example.demo.repository;
 
 import com.example.demo.domain.Dashboard;
 import com.example.demo.domain.enumeration.ExchangeMethod;
+import com.example.demo.domain.enumeration.Genre;
+import com.example.demo.domain.enumeration.Language;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,8 +21,13 @@ public interface DashboardRepository extends JpaRepository<Dashboard, Long> {
             "(lower(request.senderBook.title) like lower(concat(:input, '%')) or " +
             "lower(request.senderBook.author) like lower(concat(:input, '%')) or " +
             "lower(request.user.location) like lower(concat(:input, '%'))) and " +
-            "(:exchangeType is null or request.status = :exchangeType)")
-    Page<Dashboard> getRequestBooksExceptOwnerIdByFilter(@Param("id") Long id, @Param("input") String input, @Param("exchangeType") ExchangeMethod exchangeType, Pageable pageable);
+            "(:exchangeType is null or request.status = :exchangeType) and" +
+            "(:genre is null or request.senderBook.genre = :genre) and" +
+            "(:language is null or request.senderBook.language = :language)")
+    Page<Dashboard> getRequestBooksExceptOwnerIdByFilter(@Param("id") Long id, @Param("input") String input,
+                                                         @Param("exchangeType") ExchangeMethod exchangeType,
+                                                         @Param("genre") Genre genre, @Param("language") Language language,
+                                                         Pageable pageable);
 
     @Query("select request from Dashboard request join request.user owner where owner.id <> :id")
     Page<Dashboard> getRequestBooksExceptOwnerId(@Param("id") Long id, Pageable pageable);

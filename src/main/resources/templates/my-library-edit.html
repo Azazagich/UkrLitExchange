@@ -143,7 +143,11 @@
                     <i class="fas fa-tag form-icon"></i>
                     Genre
                 </label>
-                <input type="text" class="form-control" th:field="*{genre}" placeholder="Enter book genre">
+                <select class="form-select" th:field="*{genre}">
+                    <option th:each="genr : ${genre}"
+                            th:value="${genr}" th:text="${genr.displayName}">
+                    </option>
+                </select>
             </div>
 
             <div class="mb-4">
@@ -151,7 +155,11 @@
                     <i class="fas fa-language form-icon"></i>
                     Language
                 </label>
-                <input type="text" class="form-control" th:field="*{language}" placeholder="Enter book language">
+                <select class="form-select" th:field="*{language}">
+                    <option th:each="lang : ${language}"
+                            th:value="${lang}" th:text="${lang.displayName}">
+                    </option>
+                </select>
             </div>
 
             <!-- Condition -->
@@ -162,7 +170,7 @@
                 </label>
                 <select class="form-select" th:field="*{condition}">
                     <option th:each="cond : ${condition}"
-                            th:value="${cond}" th:text="${cond}">
+                            th:value="${cond}" th:text="${cond.displayName}">
                     </option>
                 </select>
             </div>
@@ -174,17 +182,6 @@
                 </label>
                 <textarea class="form-control" th:field="*{description}" placeholder="Add book description"></textarea>
             </div>
-
-<!--            <div class="mb-4">-->
-<!--                <label class="form-label">-->
-<!--                    <i class="fas fa-list-check form-icon"></i>-->
-<!--                    Status-->
-<!--                </label>-->
-<!--                <select class="form-select" th:field="*{bookStatus}">-->
-<!--                    <option th:each="status : ${T(com.example.demo.domain.enumeration.BookStatus).values()}"-->
-<!--                            th:value="${status}" th:text="${status}"></option>-->
-<!--                </select>-->
-<!--            </div>-->
 
             <div class="btn-group">
                 <a th:href="@{/web/ukr-lit-exchange/my-library}" class="btn btn-secondary">

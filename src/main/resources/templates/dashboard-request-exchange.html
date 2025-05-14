@@ -117,7 +117,7 @@
                         id="deliveryMethod"
                         required>
                     <option value="">-- Виберіть спосіб --</option>
-                    <option th:each="method : ${deliveryMethod}"
+                    <option th:each="method : ${deliveryMethodAll}"
                             th:value="${method}"
                             th:text="${method.deliveryMethod}">
                     </option>

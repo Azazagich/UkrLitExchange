@@ -118,12 +118,11 @@
                     <i class="fas fa-tag"></i>
                     Genre
                 </label>
-                <input type="text"
-                       class="form-control"
-                       th:field="*{genre}"
-                       required
-                       maxlength="50"
-                       placeholder="Enter book genre">
+                <select class="form-select" th:field="*{genre}">
+                    <option th:each="genr : ${genre}"
+                            th:value="${genr}" th:text="${genr.displayName}">
+                    </option>
+                </select>
             </div>
 
             <!-- Language -->
@@ -132,7 +131,11 @@
                     <i class="fas fa-language"></i>
                     Language
                 </label>
-                <input type="text" class="form-control" th:field="*{language}" required maxlength="50" placeholder="Enter book language">
+                <select class="form-select" th:field="*{language}">
+                    <option th:each="lang : ${language}"
+                            th:value="${lang}" th:text="${lang.displayName}">
+                    </option>
+                </select>
             </div>
 
             <!-- Condition -->
@@ -143,7 +146,7 @@
                 </label>
                 <select class="form-select" th:field="*{condition}">
                     <option th:each="cond : ${condition}"
-                            th:value="${cond}" th:text="${cond}">
+                            th:value="${cond}" th:text="${cond.displayName}">
                     </option>
                 </select>
             </div>

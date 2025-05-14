@@ -77,7 +77,7 @@ public class RequestWebController {
         RequestDTO dto = new RequestDTO();
         dto.setDashboard(board);
         model.addAttribute("requestDTO", dto);
-        model.addAttribute("deliveryMethod", DeliveryMethod.values());
+        model.addAttribute("deliveryMethodAll", DeliveryMethod.values());
         model.addAttribute("userBooks", bookService.getBooksByOwnerId(sender.getId()));
         return "dashboard-request-exchange";
     }
@@ -110,7 +110,7 @@ public class RequestWebController {
         RequestDTO requestDTO = new RequestDTO();
         requestDTO.setDashboard(requestBoard);
 
-        model.addAttribute("deliveryMethod", DeliveryMethod.values());
+        model.addAttribute("deliveryMethodAll", DeliveryMethod.values());
         model.addAttribute("requestDTO", requestDTO);
         return "dashboard-request-donation";
     }

@@ -250,9 +250,12 @@
         <div class="tab-pane fade show active" id="all">
             <form th:action="@{/web/ukr-lit-exchange/dashboard}" method="get" class="mb-5 dashboard-search-form">
                 <div class="row g-2 align-items-center">
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Пошук по назві книги, автору або локації" name="query" th:value="${query}">
+                    <div class="col-md-4">
+                        <input type="text" class="form-control"
+                               placeholder="Пошук по назві книги, автору або локації"
+                               name="query" th:value="${query}">
                     </div>
+
                     <div class="col-md-2">
                         <select class="form-select" name="type">
                             <option value="">Всі типи</option>
@@ -260,23 +263,48 @@
                             <option value="DONATION" th:selected="${selectedType == 'DONATION'}">Дарування</option>
                         </select>
                     </div>
+
+                    <div class="col-md-2">
+                        <select class="form-select" name="genre">
+                            <option value="">Всі жанри</option>
+                            <option th:each="genr : ${genre}"
+                                    th:value="${genr}"
+                                    th:text="${genr.displayName}"
+                                    th:selected="${selectedGenre == genr.name()}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <select class="form-select" name="language">
+                            <option value="">Всі мови</option>
+                            <option th:each="lang : ${language}"
+                                    th:value="${lang}"
+                                    th:text="${lang.displayName}"
+                                    th:selected="${selectedLanguage == lang.name()}">
+                            </option>
+                        </select>
+                    </div>
+
                     <div class="col-md-2">
                         <button class="btn btn-primary w-100" type="submit">Пошук</button>
                     </div>
                 </div>
             </form>
 
+
             <div class="row g-4">
                 <div class="col-md-6 col-lg-4"
                      th:each="request : ${requestAllBooks}"
                      th:if="${request.deleted == false or request.deleted == null}">
                     <div class="card h-100">
-                        <img th:src="${request.senderBook.photoBookUrl}" class="card-img-top" alt="Фото книги">
+                        <img th:src="${request.senderBook.photoBookUrl != null ? request.senderBook.photoBookUrl : '/uploads/books/default-book.jpg'}" class="card-img-top" alt="Фото книги">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title" th:text="${request.senderBook.title}">Назва книги</h5>
                             <p class="card-text" th:text="${request.senderBook.author}">Автор</p>
-                            <p><strong>Мова:</strong> <span th:text="${request.senderBook.language}"></span></p>
-                            <p><strong>Жанр:</strong> <span th:text="${request.senderBook.genre}"></span></p>
+                            <p><strong>Мова:</strong> <span th:text="${request.senderBook.language.displayName}"></span></p>
+                            <p><strong>Жанр:</strong> <span th:text="${request.senderBook.genre.displayName}"></span></p>
+                            <p><strong>Cтан книги:</strong> <span th:text="${request.senderBook.condition.displayName}"></span></p>
                             <p><strong>Опис книги:</strong> <span th:text="${request.senderBook.description}"></span></p>
                             <p><strong>Опис запиту:</strong> <span th:text="${request.description}"></span></p>
                             <p><strong>Нікнейм:</strong> <span th:text="${request.user.username}"></span></p>
@@ -334,14 +362,16 @@
                      th:each="request : ${requestMyBooks}"
                      th:if="${request.deleted == false or request.deleted == null}">
                     <div class="card h-100">
-                        <img th:src="${request.senderBook.photoBookUrl}" class="card-img-top" alt="Фото книги">
+                        <img th:src="${request.senderBook.photoBookUrl != null ? request.senderBook.photoBookUrl : '/uploads/books/default-book.jpg'}" class="card-img-top" alt="Фото книги">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title" th:text="${request.senderBook.title}">Назва книги</h5>
                             <p class="card-text" th:text="${request.senderBook.author}">Автор</p>
-                            <p><strong>Мова:</strong> <span th:text="${request.senderBook.language}"></span></p>
-                            <p><strong>Жанр:</strong> <span th:text="${request.senderBook.genre}"></span></p>
-                            <p><strong>Статус:</strong> <span th:text="${request.status}"></span></p>
-                            <p><strong>Опис:</strong> <span th:text="${request.description}"></span></p>
+                            <p><strong>Мова:</strong> <span th:text="${request.senderBook.language.displayName}"></span></p>
+                            <p><strong>Жанр:</strong> <span th:text="${request.senderBook.genre.displayName}"></span></p>
+                            <p><strong>Cтан книги:</strong> <span th:text="${request.senderBook.condition.displayName}"></span></p>
+                            <p><strong>Опис книги:</strong> <span th:text="${request.senderBook.description}"></span></p>
+                            <p><strong>Статус:</strong> <span th:text="${request.status.exchangeMethod}"></span></p>
+                            <p><strong>Опис запиту:</strong> <span th:text="${request.description}"></span></p>
                             <p><strong>Нікнейм:</strong> <span th:text="${request.user.username}"></span></p>
                             <p><strong>Локація:</strong> <span th:text="${request.user.location}"></span></p>
                             <div class="mt-auto d-flex justify-content-between mt-3">

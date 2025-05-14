@@ -28,13 +28,6 @@ public class UserRestController {
         return userService.getAll();
     }
 
-    // this post request is useless because we add new user through registration
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public UserDTO save(@Valid @RequestBody UserDTO userDTO){
-//        return userService.save(userDTO);
-//    }
-
     @PutMapping("/{id}")
     public UserDTO fullUpdate(@PathVariable Long id, @RequestBody UserDTO userDTO){
         userService.updateAll(id, userDTO);

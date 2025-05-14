@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.domain.Dashboard;
 import com.example.demo.domain.User;
 import com.example.demo.domain.enumeration.ExchangeMethod;
+import com.example.demo.domain.enumeration.Genre;
+import com.example.demo.domain.enumeration.Language;
 import com.example.demo.repository.DashboardRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.dto.DashboardDTO;
@@ -58,9 +60,9 @@ public class DashboardService implements CrudService<DashboardDTO, Long> {
                 .map(dashboardMapper::toDTO);
     }
 
-    public Page<DashboardDTO> getRequestDashboardsExceptOwnerIdByFilter(Long userId, String input, ExchangeMethod type, int page, int limit){
+    public Page<DashboardDTO> getRequestDashboardsExceptOwnerIdByFilter(Long userId, String input, ExchangeMethod type, Genre genre, Language language, int page, int limit){
         log.debug("Get all books except user id: {}", userId);
-        return dashboardRepository.getRequestBooksExceptOwnerIdByFilter(userId, input, type, PageRequest.of(page, limit))
+        return dashboardRepository.getRequestBooksExceptOwnerIdByFilter(userId, input, type, genre, language, PageRequest.of(page, limit))
                 .map(dashboardMapper::toDTO);
     }
 

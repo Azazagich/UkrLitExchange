@@ -229,9 +229,9 @@
 
     <form th:action="@{/web/ukr-lit-exchange/my-library}" method="get" class="mb-4 search-form">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search by title or author"
+            <input type="text" class="form-control" placeholder="Знайти книгу по назві або автору"
                    name="query" th:value="${query}">
-            <button class="btn btn-primary" type="submit">Search</button>
+            <button class="btn btn-primary" type="submit">Пошук</button>
         </div>
     </form>
 
@@ -254,7 +254,9 @@
             <div class="book-card">
 
                 <div class="book-image-wrapper">
-                    <img th:src="${book.photoBookUrl}" alt="Book Photo" class="book-image">
+                    <img th:src="${book.photoBookUrl != null ? book.photoBookUrl : '/uploads/books/default-book.jpg'}"
+                         alt="Book Photo"
+                         class="book-image">
                 </div>
                 <div class="book-body">
                     <h3 class="book-title" th:text="${book.title}"></h3>
@@ -263,15 +265,15 @@
                     <div class="book-details">
                         <div class="book-detail-item">
                             <i class="fas fa-bookmark"></i>
-                            <span th:text="${book.genre}"></span>
+                            <span th:text="${book.genre.displayName}"></span>
                         </div>
                         <div class="book-detail-item">
                             <i class="fas fa-language"></i>
-                            <span th:text="${book.language}"></span>
+                            <span th:text="${book.language.displayName}"></span>
                         </div>
                         <div class="book-detail-item">
                             <i class="fas fa-info-circle"></i>
-                            <span th:text="${book.getCondition()}"></span>
+                            <span th:text="${book.condition.displayName}"></span>
                         </div>
                         <div class="book-detail-item">
                             <i class="fas fa-info-circle"></i>

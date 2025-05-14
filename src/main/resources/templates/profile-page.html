@@ -22,8 +22,9 @@
             <div class="tab-pane fade show active">
                 <!-- Profile Header -->
                 <section class="profile-header">
+
                     <div class="profile-avatar">
-                        <img th:src="${user.avatarUrl}" alt="User Avatar">
+                        <img th:src="${user.avatarUrl != null ? user.avatarUrl : '/uploads/avatar/default-avatar.png'}" alt="User Avatar">
                     </div>
 
                     <div class="profile-details">
